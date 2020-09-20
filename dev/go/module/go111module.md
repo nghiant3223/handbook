@@ -1,10 +1,10 @@
 # GO111MODULE
 
-Reference: https://dev.to/maelvls/why-is-go111module-everywhere-and-everything-about-go-modules-24k
+Reference: <https://dev.to/maelvls/why-is-go111module-everywhere-and-everything-about-go-modules-24k>
 
 ## GOPATH and GOMODULE
 
-There are two modes in go: GOPATH and GOMODULE.
+There are two modes in Go: **GOPATH** and **GOMODULE**.
 
 In GOPATH mode, `go get` would fetch all the sources using their import path and store them in `$GOPATH/src`. There was no versioning and the 'master' branch would represent a stable version of the package, which means `go get` always fetches latest version of the dependency.
 
@@ -30,6 +30,7 @@ GO111MODULE is an environment variable that can be set when using go for changin
 | Outside `$GOPATH` |         No        | GOMODULE (error) |
 
 Whenever you are in your GOPATH and you want to do an operation that requires Go modules (e.g., go get a specific version of a binary), you need to do:
+
 ```
 GO111MODULE=on go get github.com/golang/mock/tree/master/mockgen@v1.3.1
 ```
@@ -39,12 +40,12 @@ GO111MODULE=on go get github.com/golang/mock/tree/master/mockgen@v1.3.1
 Using Go 1.13, `GO111MODULE`'s default (auto) changes:
 
 
-|      Location     | `go.mod` avaiable |       Mode       |
-|:-----------------:|-------------------|:----------------:|
-| Inside `$GOPATH`  |        Yes        |     GOMODULE     |
-| Inside `$GOPATH`  |         No        |      GOPATH      |
-| Outside `$GOPATH` |        Yes        |     GOMODULE     |
-| Outside `$GOPATH` |         No        |     GOMODULE     |
+|      Location     | `go.mod` available |       Mode       |
+|:-----------------:|--------------------|:----------------:|
+| Inside `$GOPATH`  |        Yes         |     GOMODULE     |
+| Inside `$GOPATH`  |         No         |      GOPATH      |
+| Outside `$GOPATH` |        Yes         |     GOMODULE     |
+| Outside `$GOPATH` |         No         |     GOMODULE     |
 
 ### `GO111MODULE` with Go 1.14
 
@@ -59,7 +60,7 @@ Note that some slight changes in behaviors unrelated to `GO111MODULE` happened:
 
 Now that we know that `GO111MODULE` can be very useful for enabling the Go Modules behavior, here is the answer: that's because `GO111MODULE=on` allows you to select a version. Without Go Modules, `go get` fetches the latest commit from master. With Go Modules, you can select a specific version based on git tags.
 
-I use `GO111MODULE=on` very often when I want to switch between the latest version and the HEAD version of gopls (the Go Language Server):
+I use `GO111MODULE=on` very often when I want to switch between the latest version and the HEAD version of gopls:
 
 ```
 GO111MODULE=on go get golang.org/x/tools/gopls@latest
@@ -68,5 +69,5 @@ GO111MODULE=on go get golang.org/x/tools/gopls@v0.1
 GO111MODULE=on go get golang.org/x/tools/gopls@v0.1.8
 GO111MODULE="on" go get sigs.k8s.io/kind@v0.7.0
 ```
-Again, these dependencies are stored in `$GOPATH/pkg/mod`.
 
+Again, these dependencies are stored in `$GOPATH/pkg/mod`.
