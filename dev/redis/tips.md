@@ -4,4 +4,4 @@
 `redis-cli KEYS "pattern" | xargs redis-cli DEL`
 
 - Batch get:  
-`MGET member [, member]`
+`MGET member [member]`
