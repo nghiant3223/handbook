@@ -58,6 +58,7 @@ Note that some slight changes in behaviors unrelated to `GO111MODULE` happened:
 - `GO111MODULE=on` forces Go to be in GOMODULE mode even if the project is in your `$GOPATH` (**not requires go.mod to work**).
 - `GO111MODULE=off` forces Go to be in GOPATH mode, even outside of `$GOPATH`.
 - `GO111MODULE=auto` is the default value of `GO111MODULE` when it is not set, the mode in which Go run is specified in below table:
+
 |      Location     | `go.mod` available |       Mode       |
 |:-----------------:|:------------------:|:----------------:|
 | Inside `$GOPATH`  |        Yes         |     GOMODULE     |
