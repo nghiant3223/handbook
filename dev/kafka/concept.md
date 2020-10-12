@@ -44,7 +44,7 @@
 ### Message key
 
 - Producer can send a key with the message (string, number, etcd.)
-- If key=null, data is sent in round-robin fashion
+- If key = null, data is sent in round-robin fashion
 - If a key is sent, then all messages for that key will always go to the same partition
 - A key is basically sent if you need message ordering for a specific field (ex: truck_id)
 - We get this gurantee thanks to key hashing which depends on the number of partitions
@@ -61,4 +61,4 @@
 - Consumer read data in consumer groups
 - **Each consumer within a group reads from exclusive partitions (no partitions distribute messages to 2 consumers in one group)**
 - If there are more consumers than partitions within a group, some consumers will be inactive
-- If you want to have high # of consumers, you must have high # of paritions
+- If you want to have high # of consumers, you must have high # of partitions
