@@ -62,3 +62,33 @@
 - **No 2 consumers in one group receive message from the same partition**
 - If there are more consumers than partitions within a group, some consumers will be inactive
 - If you want to have high # of consumers, you must have high # of partitions
+
+### Consumer offsets
+
+- Kafka stores offsets at which a consumer group has been reading
+- The committed offsets live in a topic named *__consumer_offsets*
+- When a consumer in a group has processed data received from topic, it should be committing the offsets
+- Committing the offsets means writing to the topic *__consumer_offsets*
+- If a consumer dies, it will able to read back from where it left off thanks to the committed consumer offsets
+
+### Delivery semantics for consumers
+
+- Consumers can choose when to commit offset
+- There are 3 delivery semantics:
+  - At most once:
+    - Offsets are committed as soon as the message is delivered
+    - If the message goes wrong, the message will be lost (it won't be read again)
+   - At least once:
+     - Offsets are committed after the message is processed
+     - If the processing goes wrong, the message will be read again
+     - This can results in duplication processing of message. Make sure the processing is idempotent (i.e. processing the message again won't impact the system)
+    - Exactly once:
+      - Can be achieved for Kafka => Kafka workflows using Kafka Stream API
+      - For Kafka => External System workflows, use idempotent consumer
+      
+## Broker Discovery
+
+- Every broker is also called a *bootstrap server*
+- That means that you only need to connect to one broker and you be connected to the entire cluster
+- Each broker knows about all brokers, topics and partitions (metadata)
+
