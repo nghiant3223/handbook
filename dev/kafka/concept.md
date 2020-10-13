@@ -30,7 +30,7 @@
 - **Only that leader can receive and serve data for a partition**
 - The other brokers (followers) will synchronize the data
 - Therfore, each partition has one leader and multiple followers
-- ZooKeeper decides which is the leader, which are the follower
+- ZooKeeper decides which is the leader, which are the followers
 
 ## Producers
 
@@ -59,6 +59,6 @@
 ### Consumer groups
 
 - Consumer read data in consumer groups
-- **Each consumer within a group reads from exclusive partitions (no partitions distribute messages to 2 consumers in one group)**
+- **Each consumer within a group reads from exclusive partitions (no 2 consumers in one group receive message from the same partition)**
 - If there are more consumers than partitions within a group, some consumers will be inactive
 - If you want to have high # of consumers, you must have high # of partitions
