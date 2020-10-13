@@ -92,3 +92,18 @@
 - That means that you only need to connect to one broker and you be connected to the entire cluster
 - Each broker knows about all brokers, topics and partitions (metadata)
 
+## ZooKeeper
+
+- Manages brokers by keeping a list of them
+- Helps in performing leader election for partitions. When one broker goes down, new partition replica is elected to be the leader
+- ZooKeeper sends notifications to Kafka in any case of changes (e.g. new topic, broker dies, broker comes up, delete topics, etc...)
+- **Kafka can't not work without ZooKeeper**
+- Operates with an odd number of servers (3, 5, 7)
+- Also has a concepts of leader and followers. Leader handles writes, followers handle reads
+
+## Guarantees
+
+- Messages appended to a partition of a topic in the order they are sent
+- Consumer reads message from a partition of a topic in the ordered they are stored
+- With the replication factor of N, preducers and consumers can tolerate upto N-1 brokers being down
+- As long as the number of partition remains constant for a topic (no new partitions), the same key will always go to the same partition
