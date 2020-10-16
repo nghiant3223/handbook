@@ -41,6 +41,7 @@
   - ACK = 1: Producer will wait for leader acknowledgement (limited data loss)
   - ACK = all: Producer will wait for leader + follower acknowledgement (no data loss)
 - Messages can be sent by producers in batch
+- By default, producers distribute messages evenly to topic's partitions
 
 ### Message key
 
