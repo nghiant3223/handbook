@@ -99,7 +99,6 @@
 - ZooKeeper sends notifications to Kafka in any case of changes (e.g. new topic, broker dies, broker comes up, delete topics, etc...)
 - **Kafka can't not work without ZooKeeper**
 - Operates with an odd number of servers (3, 5, 7)
-- Also has a concepts of leader and followers. Leader handles writes, followers handle reads
 
 ## Guarantees
 
