@@ -40,7 +40,7 @@
   - ACK = 0: Producer won't wait for acknowledgement (possible data loss)
   - ACK = 1: Producer will wait for leader acknowledgement (limited data loss)
   - ACK = all: Producer will wait for leader + follower acknowledgement (no data loss)
-- Producers send messages in batch for efficiency
+- Messages can be sent by producers in batch
 
 ### Message key
 
@@ -56,6 +56,7 @@
 - Consumer know which broker to read from
 - In case of broker failures, consumers know how to recover
 - Data is read in order **within each partitions**
+- Messages can be received by consumers in batch
 - Consumers make polling to parititon to check whether they have messages to receive
 
 ### Consumer groups
