@@ -40,6 +40,7 @@
   - ACK = 0: Producer won't wait for acknowledgement (possible data loss)
   - ACK = 1: Producer will wait for leader acknowledgement (limited data loss)
   - ACK = all: Producer will wait for leader + follower acknowledgement (no data loss)
+- Producers send messages in batch for efficiency
 
 ### Message key
 
