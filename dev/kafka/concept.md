@@ -56,6 +56,7 @@
 - Consumer know which broker to read from
 - In case of broker failures, consumers know how to recover
 - Data is read in order **within each partitions**
+- Consumers make polling to parititon to check whether they have messages to receive
 
 ### Consumer groups
 
