@@ -106,4 +106,4 @@
 - Messages appended to a partition of a topic in the order they are sent
 - Consumer reads message from a partition of a topic in the ordered they are stored
 - With the replication factor of N, preducers and consumers can tolerate upto N-1 brokers being down
-- **As long as the number of partition remains constant for a topic (no new partitions)**, the same key will always go to the same partition
+- **As long as the number of partition remains constant for a topic (no new partitions)**, messages with the same key always go to the same partition
