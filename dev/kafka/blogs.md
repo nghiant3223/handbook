@@ -4,6 +4,7 @@
 - [How to Choose the Number of Partitions](#how-to-choose-the-number-of-partitions)
 - [How Kafka’s Consumer Auto Commit Configuration Can Lead to Potential Duplication or Data Loss](https://blog.newrelic.com/engineering/kafka-consumer-config-auto-commit-data-loss/)
 - [Golang - Working with Kafka (Message Batching, ACKs, Logging)](https://www.sohamkamani.com/golang/working-with-kafka/)
+- [Partition Assignment Strategy](https://medium.com/@anyili0928/what-i-have-learned-from-kafka-partition-assignment-strategy-799fdf15d3ab)
 
 ## How to Choose the Number of Partitions
 
