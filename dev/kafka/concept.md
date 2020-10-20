@@ -94,7 +94,7 @@
       - Can be achieved for Kafka => Kafka workflows using Kafka Stream API
       - For Kafka => External System workflows, use idempotent consumer
 
-### Groups and Partition Rebalance
+### Rebalance
 
 - Rebalance is moving partition ownership from one consumer to another
 - It happens when:
@@ -102,6 +102,8 @@
   - Consumer shuts down or crashses
   - New parition is added the topic which consumer is consuming
 - During a rebalance, **consumers can’t consume messages** => Rebalance is basically a short window of unavailability of the entire consumer group
+- After a rebalance, each consumer may be assigned a new set of partitions than the one it processed before. In order to know where to pick up the work, the consumer will read the latest committed offset of each partition and continue from there.
+- During rebalance, the consumer loses its current state; if it was caching any data, it will need to refresh its caches—slowing down the application until the consumer sets up its state again
 
 ## Broker Discovery
 
