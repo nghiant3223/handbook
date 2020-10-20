@@ -59,6 +59,10 @@
 - Data is read in order **within each partitions**
 - Messages can be received by consumers in batch
 - Consumers make polling to parititon to check whether they have messages to receive
+- Consumers must keep polling Kafka or they will be considered dead and the partitions they are consuming will be handed to another consumer in the group to continue consuming
+- Method `poll` takes a timeout parameter. It specifies how long it will take `poll` to return, with or without data. It also means that how fast do you want to return control to the thread that does the polling
+- Remember to call close the consumer before exiting. This will close network connection and sockets, trigger the rebalance immediately rather than wait for the group coordinator to discover that the consumer stopped sending heartbeats and is likely dead, which will take longer and therefore result in a longer period of time in which consumers can’t consume messages from a subset of the partitions
+- **One consumer per thread is the rule**. You can’t have multiple consumers that belong to the same group in one thread and you can’t have multiple threads safely use the same consumer
 
 ### Consumer groups
 
@@ -89,7 +93,17 @@
     - Exactly once:
       - Can be achieved for Kafka => Kafka workflows using Kafka Stream API
       - For Kafka => External System workflows, use idempotent consumer
-      
+
+### Groups and Partition Rebalance
+
+- Rebalance is moving partition ownership from one consumer to another
+- It happens when:
+  - New consumer is added to the group
+  - Consumer shuts down or crashses
+  - New parition is added the topic which consumer is consuming
+- During a rebalance, consumers can’t consume messages, so a rebalance is basically a short window of unavailability of the entire consumer group
+- 
+
 ## Broker Discovery
 
 - Every broker is also called a *bootstrap server*
