@@ -101,8 +101,7 @@
   - New consumer is added to the group
   - Consumer shuts down or crashses
   - New parition is added the topic which consumer is consuming
-- During a rebalance, consumers can’t consume messages, so a rebalance is basically a short window of unavailability of the entire consumer group
-- 
+- During a rebalance, **consumers can’t consume messages** => Rebalance is basically a short window of unavailability of the entire consumer group
 
 ## Broker Discovery
 
