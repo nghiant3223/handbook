@@ -57,7 +57,9 @@
 - Consumer know which broker to read from
 - In case of broker failures, consumers know how to recover
 - Data is read in order **within each partitions**
-- Messages can be received by consumers in batch
+- Messages can be received by consumers in batch and consumed in sequential order only
+- If you want to postpone processing of some messages you can republish them to separate topics, one for each delay value
+- Processing failed messages can be achieved by cloning the message and republishing it to one of retry topics with updated information about attempt number and next retry timestamp
 - Consumers make polling to parititon to check whether they have messages to receive
 - Consumers must keep polling Kafka or they will be considered dead and the partitions they are consuming will be handed to another consumer in the group to continue consuming
 - Method `poll` takes a timeout parameter. It specifies how long it will take `poll` to return, with or without data. It also means that how fast do you want to return control to the thread that does the polling
