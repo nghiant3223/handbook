@@ -8,3 +8,12 @@
 - **Secondary index**: specified on a field that is a candidate key and has a unique value in every record, or on a nonkey field with duplicate values
 
 ![Primary Index](images/primary_index.png)
+![Clustering Index 1](images/clustering_index_1.png)
+![Clustering Index 2](images/clustering_index_2.png)
+![Secondary Index 1](images/secondary_index_1.png)
+![Secondary Index 2](images/secondary_index_2.png)
+
+## Multi-Level Indexes
+
+Use B-Tree and B+-Tree for better searching
+![Multilevel Index](images/multi_level_index.png)
