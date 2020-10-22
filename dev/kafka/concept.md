@@ -60,11 +60,14 @@
 - Messages can be received by consumers in batch and consumed in sequential order only
 - If you want to postpone processing of some messages you can republish them to separate topics, one for each delay value
 - Processing failed messages can be achieved by cloning the message and republishing it to one of retry topics with updated information about attempt number and next retry timestamp
+- Remember to call close the consumer before exiting. This will close network connection and sockets, trigger the rebalance immediately rather than wait for the group coordinator to discover that the consumer stopped sending heartbeats and is likely dead, which will take longer and therefore result in a longer period of time in which consumers can’t consume messages from a subset of the partitions
+- **One consumer per thread is the rule**. You can’t have multiple consumers that belong to the same group in one thread and you can’t have multiple threads safely use the same consumer
+
+### Polling
+
 - Consumers make polling to parititon to check whether they have messages to receive
 - Consumers must keep polling Kafka or they will be considered dead and the partitions they are consuming will be handed to another consumer in the group to continue consuming
 - Method `poll` takes a timeout parameter. It specifies how long it will take `poll` to return, with or without data. It also means that how fast do you want to return control to the thread that does the polling
-- Remember to call close the consumer before exiting. This will close network connection and sockets, trigger the rebalance immediately rather than wait for the group coordinator to discover that the consumer stopped sending heartbeats and is likely dead, which will take longer and therefore result in a longer period of time in which consumers can’t consume messages from a subset of the partitions
-- **One consumer per thread is the rule**. You can’t have multiple consumers that belong to the same group in one thread and you can’t have multiple threads safely use the same consumer
 
 ### Consumer groups
 
@@ -104,7 +107,7 @@
   - Consumer shuts down or crashses
   - New parition is added the topic which consumer is consuming
 - During a rebalance, **consumers can’t consume messages** => Rebalance is basically a short window of unavailability of the entire consumer group
-- After a rebalance, each consumer may be assigned a new set of partitions than the one it processed before. In order to know where to pick up the work, the consumer will read the latest committed offset of each partition and continue from there.
+- After a rebalance, each consumer may be assigned a new set of partitions than the one it processed before. In order to know where to pick up the work, the consumer will read the **latest committed offset** of each partition and continue from there.
 - During rebalance, the consumer loses its current state; if it was caching any data, it will need to refresh its caches—slowing down the application until the consumer sets up its state again
 
 ## Broker Discovery
