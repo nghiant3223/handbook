@@ -106,7 +106,7 @@
       - Can be achieved for Kafka => Kafka workflows using Kafka Stream API
       - For Kafka => External System workflows, use idempotent consumer
 
-### Rebalancing
+### Rebalance
 
 - Rebalance is moving partition ownership from one consumer to another
 - It happens when:
@@ -116,6 +116,15 @@
 - During a rebalance, **consumers can’t consume messages** => Rebalance is basically a short window of unavailability of the entire consumer group
 - After a rebalance, each consumer may be assigned a new set of partitions than the one it processed before. In order to know where to pick up the work, the consumer will read the **latest committed offset** of each partition and continue from there.
 - During rebalance, the consumer loses its current state; if it was caching any data, it will need to refresh its caches—slowing down the application until the consumer sets up its state again
+
+### Rebalance Listeners
+
+- A consumer will want to do some cleanup work before exiting and also before partition rebalancing
+- If you know your consumer is about to lose ownership of a partition, you will want to commit offsets of the last event you’ve processed. If your consumer maintained a buffer with events that it only processes occasionally (e.g., the currentRecords map we used when explaining pause() functionality), you will want to process the events you accumulated before losing ownership of the partition. Perhaps you also need to close file handles, database connections, and such
+- There are 2 listeners:
+  - `onPartitionsRevoked(Collection<TopicPartition> partitions)`: Called before the rebalancing starts and after the consumer stopped consuming
+messages. This is where you want to commit offsets, so whoever gets this partition next will know where to start.
+  - `onPartitionsAssigned(Collection<TopicPartition> partitions)`: Called after partitions have been reassigned to the broker, but before the consumer starts consuming messages.
 
 ## Broker Discovery
 
