@@ -65,7 +65,7 @@
 
 ### Polling
 
-- Consumers make polling to parititon to check whether they have messages to receive
+- Consumers make polling to parititon to check whether they have messages to receive (it retrieves messages starting from the latest commit offset)
 - Consumers must keep polling Kafka or they will be considered dead and the partitions they are consuming will be handed to another consumer in the group to continue consuming
 - Method `poll` takes a timeout parameter. It specifies how long it will take `poll` to return, with or without data. It also means that how fast do you want to return control to the thread that does the polling
 
