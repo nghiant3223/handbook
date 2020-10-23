@@ -131,3 +131,7 @@
 - With the replication factor of N, preducers and consumers can tolerate up to N-1 brokers being down
 - **As long as the number of partition remains constant for a topic (no new partitions)**, messages with the same key always go to the same partition
 - Number of partitions of a topic cannot be decreased
+
+## Configuration
+
+- `auto.offset.reset`: Controls the behavior of the consumer when it starts reading a partition for which it doesn’t have a committed offset or if the committed offset it has is invalid. If it's set to `latest`, the consumer will start reading from the latest records (records that were written after the consumer started running). The alternative is `earliest` the consumer will read all the data in the partition, starting from the very beginning.
