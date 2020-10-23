@@ -69,14 +69,21 @@
 - Consumers must keep polling Kafka or they will be considered dead and the partitions they are consuming will be handed to another consumer in the group to continue consuming
 - Method `poll` takes a timeout parameter. It specifies how long it will take `poll` to return, with or without data. It also means that how fast do you want to return control to the thread that does the polling
 
-### Consumer groups
+### Groups
 
 - Consumer read data in consumer groups
 - **No 2 consumers in one group receive message from the same partition**
 - If there are more consumers than partitions within a group, some consumers will be inactive
 - If you want to have high # of consumers, you must have high # of partitions
 
-### Consumer offsets
+### Commits
+
+- Automatic commit: commit the largest offset returned `poll()` after each interval
+- Synchronous commit: commit the latest offset returned by `poll()` and return once the offset is committed, throwing an exception if commit fails for some reason
+- Asynchronous commit: commit the latest offset returned by `poll()` and return once the offset is committed, keep going no without waiting for the commit response
+- Offset specified commit: commit some specific offset, which can be in the middle of batch, returned from `poll()` synchronously or asynchronously
+
+### Offsets
 
 - Kafka stores offsets at which a consumer group has been reading
 - The committed offsets live in a topic named *__consumer_offsets*
@@ -84,7 +91,7 @@
 - Committing the offsets means writing to the topic *__consumer_offsets*
 - If a consumer dies, it will able to read back from where it left off thanks to the committed consumer offsets
 
-### Delivery semantics for consumers
+### Delivery semantics
 
 - Consumers can choose when to commit offset
 - There are 3 delivery semantics:
@@ -99,7 +106,7 @@
       - Can be achieved for Kafka => Kafka workflows using Kafka Stream API
       - For Kafka => External System workflows, use idempotent consumer
 
-### Rebalance
+### Rebalancing
 
 - Rebalance is moving partition ownership from one consumer to another
 - It happens when:
