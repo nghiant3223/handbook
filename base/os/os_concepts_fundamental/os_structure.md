@@ -21,3 +21,12 @@ and the output file. These names can be specified in many ways, depending on the
   Once the two file names have been obtained, the program must open the input file and create the output file. Each of these operations requires another system call. Possible error conditions for each operation can require additional system calls. When the program tries to open the input file, for example, it may find that there is no file of that name or that the file is protected against access. In these cases, the program should print a message on the console (another sequence of system calls) and then terminate abnormally (another system call). If the input file exists, then we must create a new output file. We may find that there is already an output file with the same name. This situation may cause the program to abort (a system call), or we may delete the existing file (another system call) and create a new one (yet another system call). Another option, in an interactive system, is to ask the user (via a sequence of system calls to output the prompting message and to read the response from the terminal) whether to replace the existing file or to abort the program.  
   When both files are set up, we enter a loop that reads from the input file (a system call) and writes to the output file (another system call). Each read and write must return status information regarding various possible error conditions. On input, the program may find that the end of the file has been reached or that there was a hardware failure in the read (such as a parity error). The write operation may encounter various errors, depending on the output device (for example, no more disk space).  
   Finally, after the entire file is copied, the program may close both files (another system call), write a message to the console or window (more system calls), and finally terminate normally (the final system call)
+
+- Types of system calls:
+  - Process control: `fork`, `exit`, `wait`
+  - File manipulation: `open`, `read`, `write`, `close`
+  - Device manipulation: `ioctl`, `read`, `write`
+  - Information maintenance: `getpid`, `alarm`, `sleep`
+  - Communication: `pipe`, `shm_open`, `mmap`
+  - Protection: `chmod`, `unmask`, `chown`
+  
