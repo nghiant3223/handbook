@@ -3,7 +3,7 @@
 ## Blogs
 
 - [Introduction to Clean Architecture](https://threedots.tech/post/introducing-clean-architecture/)
-- [Introduction to Lite Domain Driven Design)(https://threedots.tech/post/ddd-lite-in-go-introduction)
+- [Introduction to Lite Domain Driven Design](https://threedots.tech/post/ddd-lite-in-go-introduction)
 
 ## Repos
 
