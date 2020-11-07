@@ -1,9 +1,9 @@
 # Process
 
-## Structure
+## Composition
 
 - Text section: contains the program code
-- Program counter: pointer next instruction to be executed
+- Program counter: pointer to next instruction to be executed
 - Stack: contains temporary data (such as function parameters, return address and local variables)
 - Heap: contains dynamically allocated data
 - Data: contains global variables

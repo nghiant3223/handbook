@@ -20,7 +20,7 @@ GO111MODULE is an environment variable that can be set when using go for changin
 - `GO111MODULE=off` forces Go to be in GOPATH mode, even outside of `$GOPATH`.
 - `GO111MODULE=auto` is the default value of `GO111MODULE` when it is not set, the mode in which Go run is specified in below table:
 
-|      Location     | `go.mod` avaiable |       Mode       |
+|      Location     | Is `go.mod` avaiable |       Mode       |
 |:-----------------:|:-----------------:|:----------------:|
 | Inside `$GOPATH`  |        Yes        |      GOPATH      |
 | Inside `$GOPATH`  |         No        |      GOPATH      |
@@ -37,7 +37,7 @@ GO111MODULE=on go get github.com/golang/mock/tree/master/mockgen@v1.3.1
 Using Go 1.13, `GO111MODULE`'s default (auto) changes:
 
 
-|      Location     | `go.mod` available |       Mode       |
+|      Location     | Is `go.mod` available |       Mode       |
 |:-----------------:|:------------------:|:----------------:|
 | Inside `$GOPATH`  |        Yes         |     GOMODULE     |
 | Inside `$GOPATH`  |         No         |      GOPATH      |
@@ -59,7 +59,7 @@ Note that some slight changes in behaviors unrelated to `GO111MODULE` happened:
 - `GO111MODULE=off` forces Go to be in GOPATH mode, even outside of `$GOPATH`.
 - `GO111MODULE=auto` is the default value of `GO111MODULE` when it is not set, the mode in which Go run is specified in below table:
 
-|      Location     | `go.mod` available |       Mode       |
+|      Location     | Is `go.mod` available |       Mode       |
 |:-----------------:|:------------------:|:----------------:|
 | Inside `$GOPATH`  |        Yes         |     GOMODULE     |
 | Inside `$GOPATH`  |         No         |      GOPATH      |
