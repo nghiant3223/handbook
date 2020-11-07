@@ -26,3 +26,6 @@
   - Cancel search: `Esc + U` (MacOS), `Alt + U` (Linux)
   - Quit: `q`
   
+### Manipluating Files and Directories
+
+- Copy Files and Directories: `cp`
