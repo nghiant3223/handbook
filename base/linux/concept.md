@@ -4,6 +4,7 @@
 
 - Everything in Linux is a file (including directory)
 - Extension is meaningless. A PNG file may not end with `.png`
+- Unix-like operating systems, like Linux, maintain a single filesystem tree with devices attached at various points. This contrasts with other operating systems such as MS-DOS and Windows that maintain separate trees for each device (for example C:\, D:\, etc.)
 
 ## Directories
 
@@ -31,3 +32,17 @@
 | /usr/share/doc | Most packages installed on the system will include some kind of documentation. In /usr/share/doc, we will find documentation files organized by package                                                                                                                                   |
 | /var           | With the exception of /tmp and /home, the directories we have looked at so far remain relatively static; that is, their contents don’t change. The /var directory tree is where data that is likely to change is stored. Various databases, spool files, user mail, etc. are located here |
 | /var/log       | /var/log contains log files, records of various system activity. These are very important and should be monitored from time to time. The most useful one is /var/ log/messages. Note that for security reasons on some systems, you must be the superuser to view log files               |
+
+## Standard Input, Output, and Error
+
+- Keeping with the Unix theme of “everything is a file,” programs such as ls actually send their results to a special file called standard output (often expressed as stdout) and their status messages to another file called standard error (stderr). By default, both standard output and standard error are linked to the screen and not saved into a disk file.
+- In addition, many programs take input from a facility called standard
+input (stdin), which is, by default, attached to the keyboard.
+- I/O redirection allows us to change where output goes and where input
+comes from. Normally, output goes to the screen and input comes from the
+keyboard, but with I/O redirection we can change that
+
+## Process
+
+- When a system starts up, the kernel initiates a few of its own activities as processes and launches a program called init. init, in turn, runs a series of shell scripts (located in /etc) called init scripts, which start all the system services.
+- Many of these services are implemented as daemon programs, programs that just sit in the background and do their thing without having any user interface. So even if we are not logged in, the system is at least a little busy performing routine stuff.
