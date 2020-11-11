@@ -4,9 +4,19 @@
 
 ### 1. Set GOPRIVATE environment variable
 
-You can do either `export $GOPRIVATE=<module path>` or `go env -w GOPRIVATE=<module path>`
+Do one of the following:
+
+#### 1.1. Using `exprort`
+
+`export $GOPRIVATE=<module path>`
+
+#### 1.2. Using `go env`
+
+`go env -w GOPRIVATE=<module path>`
 
 ### 2. Set repository credentials
+
+Do one of the following:
 
 #### 2.1. Set git configuration
 
