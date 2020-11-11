@@ -39,8 +39,10 @@ FROM golang:alpine
 WORKDIR /app
 COPY . .
 
-RUN apk add git
 RUN go env -w GOPRIVATE=github.com/ereshzealous
+
+
+RUN apk add git
 RUN git config --global url."https://${username}:${access_token}@github.com".insteadOf "https://github.com"
 RUN go build -o main .
 
