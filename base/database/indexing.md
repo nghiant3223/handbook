@@ -2,9 +2,9 @@
 
 ## Clustered vs Non-clustered Indexes
 
-- **Clustered Indexes**: Physically orders the data according to the indexed columns. Typically, data themselves are physically stored in a B-Tree. The leaf nodes contain the data of each record in the table. The root and intermediate nodes point to other intermediate or leaf node.
-- **Non-clustered Indexes**: Data is not physically stored in the order of the index. Instead, indices are stored in another place. Typically, index entries are physically stored in a B-Tree.  The leaf nodes contain the pointer to the actual data. The root and intermediate nodes point to other intermediate or leaf nodes.
-![Non-clustered index](images/clusterd_vs_nonclustered.webp)
+- **Clustered Indexes**: Physically orders the data according to the indexed columns. Typically, data themselves are physically stored in a B-Tree. The root and intermediate nodes point to other intermediate or leaf node. The leaf nodes contain the data of record in the table.
+- **Non-clustered Indexes**: Data is not physically stored in the order of the index. Indices are stored in a separated B-Tree. The root and intermediate nodes point to other intermediate or leaf nodes. The leaf nodes contain the pointer to the actual data.
+![Non-clustered index](images/clustered_vs_nonclustered.webp)
 
 ## Single-Level Ordered Indexes
 
@@ -28,3 +28,5 @@ Use B-Tree and B+-Tree for better searching
 ## Indexing Practice
 
 - [How to Design Indexes](https://www.slideshare.net/billkarwin/how-to-design-indexes-really)
+- [Nonclustered Indexes in SQL Server](https://www.mssqltips.com/sqlservertutorial/9133/sql-server-nonclustered-indexes)
+- [Clustered Indexes in SQL Server](https://www.mssqltips.com/sqlservertutorial/9132/sql-server-clustered-indexes/)
