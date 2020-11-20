@@ -5,6 +5,9 @@
 - [How Kafka’s Consumer Auto Commit Configuration Can Lead to Potential Duplication or Data Loss](https://blog.newrelic.com/engineering/kafka-consumer-config-auto-commit-data-loss/)
 - [Golang - Working with Kafka (Message Batching, ACKs, Logging)](https://www.sohamkamani.com/golang/working-with-kafka/)
 - [Partition Assignment Strategy](https://medium.com/@anyili0928/what-i-have-learned-from-kafka-partition-assignment-strategy-799fdf15d3ab)
+- [Reliable Reprocessing](https://eng.uber.com/reliable-reprocessing/)
+- [Retry Mechanism and Delay Queues in Apache Kafka](https://medium.com/naukri-engineering/retry-mechanism-and-delay-queues-in-apache-kafka-528a6524f722)
+
 
 ## How to Choose the Number of Partitions
 

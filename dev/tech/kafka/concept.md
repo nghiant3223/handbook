@@ -98,10 +98,10 @@
   - At most once:
     - Offsets are committed as soon as the message is delivered
     - If the message goes wrong, the message will be lost (it won't be read again)
-   - At least once:
-     - Offsets are committed after the message is processed
-     - If the processing goes wrong, the message will be read again
-     - This can results in duplication processing of message. Make sure the processing is idempotent (i.e. processing the message again won't impact the system)
+  - At least once:
+    - Offsets are committed after the message is processed
+    - If the processing goes wrong, the message will be read again
+    - This can results in duplication processing of message. Make sure the processing is idempotent (i.e. processing the message again won't impact the system)
     - Exactly once:
       - Can be achieved for Kafka => Kafka workflows using Kafka Stream API
       - For Kafka => External System workflows, use idempotent consumer
