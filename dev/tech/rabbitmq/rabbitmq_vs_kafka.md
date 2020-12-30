@@ -8,7 +8,7 @@
   - Suitable for long-running task processing
   - Priority queue supported
 - Kafka:
-  - Used as streaming platform (messaging + distributejjjjjd storage + processing of data)
+  - Used as streaming platform (messaging + distributed storage + processing of data)
   - Message retention for extended periods, including the possibility of replaying past messages
   - Horizontal scaling (why RabbitMQ is only good for vertical scaling)
   - Failure retries are handled mannually
