@@ -1,4 +1,15 @@
-# File
+# File & Filesystems
+
+## Filesystems
+
+- Responsible for laying out data on a persistent storage device and ensureing that the data can be retrieved reliably
+- Abstraction of disk space:
+  - Methods for querying, opening, and closing files
+  - Human-readable names for files
+  - Organization of files into directories
+- Arbitrator of disk space:
+  - File permissions provide privacy from other users
+  - Qoutas ensure single users do not take all space
 
 ## File Concept
 
