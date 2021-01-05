@@ -4,8 +4,8 @@
 
 - Abstraction
   - Mechanism for programs to access hardware
-  - Scheduling multple running programs
-  - Inter-process Communication
+  - Scheduling multiple running programs
+  - Managaing inter-process communication
 - Arbitration
   - Prevent process from taking over the system
   - Enforce security requirements
