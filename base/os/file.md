@@ -1,6 +1,6 @@
-# File & Filesystems
+# File & Filesystem
 
-## Filesystems
+## Filesystem
 
 - Responsible for laying out data on a persistent storage device and ensureing that the data can be retrieved reliably
 - Abstraction of disk space:
@@ -27,7 +27,11 @@
 
 ## Open-file Table
 
-Most of the file operations mentioned involve searching the directory for the entry associated with the named file. To avoid this constant searching, many systems require that an `open()` system call be made before a file is first used. The operating system keeps a table, called the **open-file table**, containing information about all open files. When a file operation is requested, the file is specified via an index into this table, so no searching is required. When the file is no longer being actively used, it is closed by the process, and the operating system removes its entry from the **open-file table**
+Most of the file operations mentioned involve searching the directory for the entry associated with the named file. To avoid this constant searching, many systems require that an `open()` system call be made before a file is first used. The operating system keeps a table, called the **open-file table**, containing information about all open files. When a file operation is requested, the file is specified via an index into this table, so no searching is required. When the file is no longer being actively used, it is closed by the process, and the operating system removes its entry from the **open-file table**.
+
+Also, each process maintains a per-process **file descriptor table**. When a process calls `open()`, a new entry is created in the open file table. A pointer to this entry is stored in the process's file descriptor table. The file descriptor table is a simple array of pointers into the open file table. We call the index into the file descriptor table a file descriptor (a number that uniquely identifies an open file). It is this file descriptor that is returned by open(). When a process accesses a file, it uses the file descriptor to index into the file descriptor table and locate the corresponding entry in the open file table.
+
+![Open File Table](images/open_file_table.png)
 
 ## Open File Information
 
@@ -43,3 +47,17 @@ Most of the file operations mentioned involve searching the directory for the en
 - Linux has no concept of a “file extension” like some other operating systems. You may name files any way you like. The contents and/or purpose of a file is determined by other means. Although Unix-like operating systems don’t use file extensions to determine the contents/purpose of files, some application programs do.
 - The UNIX system uses a crude **magic number** stored at the beginning of some files to indicate roughly the type of the file—executable program, shell script, PDF file, and so on. Not all files have magic numbers, so system features cannot be based solely on this information. UNIX does not record the name of the creating program, either. UNIX does allow file-name-extension hints, but these extensions are neither enforced nor depended on by the operating system; they are meant mostly to aid users in determining what type of contents the file contains.
 - In UNIX, `file` command can be used to determine type of a file. This command runs three sets of tests: the filesystem test, magic number test, and language test. The first test that succeeds causes the file type to be printed.
+
+## Index Node - inode
+
+![inode](images/inode.png)
+
+An inode is a data structure. It defines a file or a directory on the file system and is stored in the directory entry. Inodes point to blocks that make up a file. The inode contains all the administrative data needed to read a file. Every file’s metadata is stored in inodes in a table structure.
+
+When using a program that refers to a file by name, the system will look in the directory entry file where it exists to pull up the corresponding inode. This gives your system the file data and information it needs to perform processes or operations.
+
+Inodes are usually located near the beginning of a partition. They store all the information associated with a file except the file name and the actual data.   All files in any Linux directory have a filename and an inode number. Users can retrieve the metadata for a file by referencing the inode number.
+
+File names and inode numbers are stored in a separate index and link to the inode. You can link to the metadata that represents the file. It is possible to have multiple file names that link to one piece of data or inode as you can see in the image below.
+
+When you create a new file, it is assigned a file name and inode number. Both are stored as entries in a directory. Running the ls command (ls -li) will show you a list of the file names and inode numbers that are stored in a directory.
