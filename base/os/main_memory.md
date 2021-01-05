@@ -1,4 +1,4 @@
-# Memory
+# Main Memory
 
 Memory is central to the operation of a modern computer system. Memory consists of a large array of bytes, each with its own address. The CPU fetches instructions from memory according to the value of the program counter. These instructions may cause additional loading from and storing to specific memory addresses.
 
@@ -28,7 +28,9 @@ This mechanism can lead to fragmentation:
 
 ## Memory Allocation Mechanism - Segmentation
 
-A memory-management scheme that creates address spaces of various sizes, called segments. A logical address space is a collection of segments. Each segment has a name and a length. The addresses specify both the segment name and the offset within the segment. The programmer therefore specifies each address by two quantities: a segment name and an offset.
+A memory-management scheme that creates address spaces of various sizes, called segments. A logical address space is a collection of segments. Each segment has a name and a length. The addresses specify both the segment name and the offset within the segment. The programmer therefore specifies each address by two quantities: a segment name and an offset. Segments don't need to be contiguous at programmer view.
+
+![Programmer's View of Segmentation](images/segmentation_view.png)
 
 Normally, when a program is compiled, the compiler automatically constructs segments reflecting the input program. A C compiler might create separate segments for the following:
 
