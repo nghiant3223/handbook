@@ -61,3 +61,8 @@ Inodes are usually located near the beginning of a partition. They store all the
 File names and inode numbers are stored in a separate index and link to the inode. You can link to the metadata that represents the file. It is possible to have multiple file names that link to one piece of data or inode as you can see in the image below.
 
 When you create a new file, it is assigned a file name and inode number. Both are stored as entries in a directory. Running the ls command (ls -li) will show you a list of the file names and inode numbers that are stored in a directory.
+
+## Reference
+
+- [File Descriptor](https://www.computerhope.com/jargon/f/file-descriptor.htm)
+- [Role of Files and File Systems, Storage Allocation, FS Implementation](https://cseweb.ucsd.edu/classes/sp16/cse120-a/applications/ln/lecture15.html)
