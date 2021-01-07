@@ -114,3 +114,4 @@ Notice from this example that TCP cannot demultiplex incoming segments by lookin
 - [Can two different sockets share a port?](https://stackoverflow.com/questions/11129212/tcp-can-two-different-sockets-share-a-port/11129641)
 - [UNIX Network Programming - Socket Pair](https://books.google.com.vn/books?id=ptSC4LpwGA0C&lpg=PA52&dq=socket+pair+tuple&pg=PA52&redir_esc=y#v=onepage&q=socket%20pair%20tuple&f=false)
 - [TCP/IP Ports and Sockets Explained](http://www.steves-internet-guide.com/tcpip-ports-sockets/)
+- [Is HTTP based on Socket?](https://stackoverflow.com/questions/38650547/is-http-based-on-socket)
