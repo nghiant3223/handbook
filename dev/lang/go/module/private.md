@@ -52,5 +52,5 @@ CMD ["./main"]
 
 ## Reference
 
-[Go Modules with Private Git Repository
+- [Go Modules with Private Git Repository
 ](https://medium.com/swlh/go-modules-with-private-git-repository-3940b6835727)

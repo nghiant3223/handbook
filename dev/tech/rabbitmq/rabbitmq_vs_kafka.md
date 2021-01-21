@@ -14,4 +14,6 @@
   - Failure retries are handled mannually
   - Using *pull* model. With Pull based system the consumer can consume based on their capability where push systems will push the messages irrespective of the state of consumer thereby putting consumer at high risk
 
-For detail: [When to use RabbitMQ over Kafka?](https://stackoverflow.com/questions/42151544/when-to-use-rabbitmq-over-kafka/42154452)
+## Reference
+
+- [When to use RabbitMQ over Kafka?](https://stackoverflow.com/questions/42151544/when-to-use-rabbitmq-over-kafka/42154452)

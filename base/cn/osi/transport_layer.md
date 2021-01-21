@@ -2,7 +2,7 @@
 
 ## Socket and Socket Pair
 
-A *socket* is the combination of IP address and port. The *socket pair* for a TCP connection is the four-tuple that defines the two endpoints of the connection: the local IP address, local port, foreign IP address, and foreign port. A socket pair uniquely identifies every TCP connection on a network.
+A *socket* is one endpoint of a two-way communication link between two programs running on the network. A socket is bound to a port number so that the TCP layer can identify the application that data is destined to be sent to. A socket is the combination of IP address and port. The *socket pair* for a TCP connection is the four-tuple that defines the two endpoints of the connection: the local IP address, local port, foreign IP address, and foreign port. A socket pair uniquely identifies every TCP connection on a network.
 
 ## User Datagram Protocol - UDP
 
@@ -49,6 +49,8 @@ callingsocket,bind, and listen and is called a passive open.
 4. The client must acknowledge the server's SYN.
 
 ![Three-Way Handshake Unix](images/3way_handshake_unix.png)
+
+> <a href="https://networkengineering.stackexchange.com/questions/24068/why-do-we-need-a-3-way-handshake-why-not-just-2-way">Why not two-way handshake?</a>
 
 > <a href="https://stackoverflow.com/questions/34073871/socket-programming-whats-the-difference-between-listen-and-accept">What is the difference between listen and accept?</a>
 
@@ -107,6 +109,21 @@ The next step assumes that another client process on the client host requests a 
 ![Second client connection with same server](images/concurrent_server_2nd_req.png)
 
 Notice from this example that TCP cannot demultiplex incoming segments by looking at just the destination port number. TCP must look at all four elements in the socket pair to determine which endpoint receives an arriving segment. In figure above, we have three sockets with the same local port (21). If a segment arrives from 206.168.112.219 port 1500 destined for 12.106.32.254 port 21, it is delivered to the first child. If a segment arrives from 206.168.112.219 port 1501 destined for 12.106.32.254 port 21, it is delivered to the second child. All other TCP segments destined for port 21 are delivered to the original server with the listening socket.
+
+## UDP Sockets
+
+The client does not establish a connection with the server. Instead, the client just sends a datagram to the server using the `sendto` function (described in the next section, which requires the address of the destination (the server) as a parameter. Similarly, the server does not accept a connection from a client. Instead, the server just calls the `recvfrom` function, which waits until data arrives from some client. `recvfrom` returns the protocol address of the client, along with the datagram, so the server can send a response to the correct client.
+
+![UDP Sockets](images/udp_socket.png)
+
+## Differences of TCP and UDP
+
+| TCP                                                                                                                                                                                                                    | UDP                                                                                                                                                                                                                                      |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| TCP is a connection-oriented protocol. Connection-orientation means that the communicating devices should establish a connection before transmitting data and should close the connection after transmitting the data. | UDP is the Datagram oriented protocol. This is because there is no overhead for opening a connection, maintaining a connection, and terminating a connection. UDP is efficient for broadcast and multicast type of network transmission. |
+| TCP is highly reliable for transferring useful data as it takes the acknowledgement of information sent. Also, resends the lost packets if any.                                                                        | Whereas in the case of UDP if the packet is lost it won’t request for retransmission and the destination computer receives corrupt data. So, UDP is an unreliable protocol.                                                               |
+| TCP provides extensive error checking mechanisms. It is because it provides flow control and acknowledgment of data. Also, error correction is supported in TCP.                                                       | UDP has only the basic error checking mechanism using checksums.                                                                                                                                                                         |
+| TCP is comparatively slower than UDP.                                                                                                                                                                                  | UDP is faster, simpler and more efficient than TCP.                                                                                                                                                                                      |
 
 ## References
 

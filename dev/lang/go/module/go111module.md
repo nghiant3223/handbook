@@ -1,7 +1,5 @@
 # GO111MODULE
 
-Reference: <https://dev.to/maelvls/why-is-go111module-everywhere-and-everything-about-go-modules-24k>
-
 ## GOPATH and GOMODULE
 
 There are two modes in Go: **GOPATH** and **GOMODULE**.
@@ -80,3 +78,8 @@ GO111MODULE="on" go get sigs.k8s.io/kind@v0.7.0
 ```
 
 Again, these dependencies are stored in `$GOPATH/pkg/mod`.
+
+## Reference
+
+- [Why is GO111MODULE everywhere and everything about modules](https://dev.to/maelvls/why-is-go111module-everywhere-and-everything-about-go-modules-24k)
+
