@@ -1,5 +1,13 @@
 # Thread
 
+## Kind of Thread
+
+There are 3 kinds of thread:
+
+- Hardware thread is a physical CPU or core. Typically, a 4 core CPU can genuinely support 4 hardware threads at once - the CPU really is doing 4 things at the same time. If a core has hyper-threading, there will be two hardware threads offered by single physical core.
+- Kernel thread are implemented in kernel space and recognized by OS.
+- User thread are implemented in user space and not recognized by OS.
+
 ## Composition
 
 - Register set: a set of register state
@@ -7,7 +15,7 @@
 - Stack: contains temporary data (such as function parameters, return address and local variables)
 - Text, Heap, Data: shared across threads of the same process
 
-<!-- ![Single-threaded process and multithreaded process](images/process_thread.png) -->
+![Single-threaded process and multithreaded process](images/process_thread.png)
 
 ## Multithreading Models
 
@@ -16,6 +24,14 @@
 - Many to Many: N user threads are multiplexed to N kernel thread. You get quick context switches and you take advantage of all the cores in your system. The main disadvantage of this approach is the complexity it adds to the scheduler.
 
 In Many to One model, when a user thread making an I/O request, all other threads are also blocked. The reason is that while waiting for I/O, kernel thread is in waiting state and not scheduled any CPU.
+
+## Critical Section
+
+Part of the program that should not be concurrently executed by more than one of program's concurrent processes of threads at a time.
+
+Typically, the critical section accesses a shared resource, such as a data structure, a peripheral device, or a network connection, that does not allow multiple concurrent accesses.
+
+By careful controlling which variable are modified inside and outside the critical section, concurrent access to that state is prevented.
 
 ## Race Condition and Data Race
 
@@ -51,7 +67,7 @@ func main() {
 }
 ```
 
-Our expectation is that, after two transactions finish, `account1` and `account2` has the balance of **200** and **800** respectively. Unfortunately, data race and race condition occurs and make things not work as expected.
+Our expectation is that, after two transactions `Transfer` finish, `account1` and `account2` has the balance of **200** and **800** respectively. Unfortunately, data race and race condition occurs and make things not work as expected.
 
 When it comes to concurrency, that is when two transactions are executed concurrently, the snippet has data race because there are two goroutines access `account1` and `account2` that are shared memory and at least one of them has write operation without any synchronization.
 
@@ -59,16 +75,16 @@ The race condition is more subtle. Because we cant guarantee the order of instru
 
 | Transaction 1 | Transaction 2 |
 | ------------- | ------------- |
-| if from.Balance < account <br/> (500 < 300)| |
-| | if from.Balance < account <br/> (500 < 300) |
-| from.Balance -= amount <br/> (account1 = 200)
-| to.Balance += amount <br/> (account2 = 800)
-| | from.Balance -= amount <br/> (account1 = -100)
-| | to.Balance -= amount <br/> (account2 = 1100)
-| | return true |
-| return true | |
+| `if from.Balance < amount` <br/> (500 < 300)| |
+| | `if from.Balance < amount` <br/> (500 < 300) |
+| `from.Balance -= amount` <br/> (account1 = 200)
+| `to.Balance += amount` <br/> (account2 = 800)
+| | `from.Balance -= amount` <br/> (account1 = -100)
+| | `to.Balance += amount` <br/> (account2 = 1100)
+| | `return true` |
+| `return true` | |
 
-After transactions finish, `account1` has **-100** and `account2` has **1100** in their balance, which not matches our expectation. This situation is called race condition. One may try to fix the problem using `Mutex.Lock`:
+After transactions finish, `account1` has **-100** and `account2` has **1100** in their balance, which does not match our expectation. This situation is called race condition. One may try to fix the problem using `Mutex.Lock`:
 
 ```go
 var mu sync.Mutex
@@ -143,6 +159,12 @@ We've ended up covering all possibilities:
 |-|-----------|----------------|
 | Race Condition | Transfer | Transfer 1 |
 | No Race Condition | Transfer 3| Transfer 2 |
+
+To sum it up, data race is completely different from race condition. Race conditions and data races are not subset of one another, neither the necessary, nor the sufficient condition for one another. There are considerable overlap: many race conditions are due to data races and many data races lead to race conditions. On the other hand: we can have race conditions without data races and data races without race conditions.
+
+## Signal
+
+A signal is a notification sent to a process in order to notify it of an event that occured. When the signal is sent, the OS interrupts the target process's normal flow of execution to deliver the signal. If the process has previously registered a signal handler, that routine is executed. Otherwise, the default signal handler is executed. 
 
 ## Reference
 
