@@ -10,10 +10,17 @@ There are 3 kinds of thread:
 
 ## Composition
 
-- Register set: a set of register state
-- Program counter: pointer to next instruction to be executed
-- Stack: contains temporary data (such as function parameters, return address and local variables)
-- Text, Heap, Data: shared across threads of the same process
+A thread has its own:
+
+- Register set
+- Program counter
+- Stack
+
+Threads of a process share:
+
+- Text
+- Heap
+- Data
 
 ![Single-threaded process and multithreaded process](images/process_thread.png)
 

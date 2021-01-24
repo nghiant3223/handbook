@@ -2,8 +2,6 @@
 
 Memory is central to the operation of a modern computer system. Memory consists of a large array of bytes, each with its own address. The CPU fetches instructions from memory according to the value of the program counter. These instructions may cause additional loading from and storing to specific memory addresses.
 
-## Basic Hardware
-
 Main memory and the registers built into the processor itself are the only general-purpose storage that the CPU can access directly. **There are machine instructions that take memory addresses as arguments, but none that take disk addresses**. Therefore, any instructions in execution, and any data being used by the instructions, must be in one of these direct-access storage devices. If the data are not in memory, they must be moved there before the CPU can operate on them.
 
 ## Address Binding
@@ -44,7 +42,7 @@ Normally, when a program is compiled, the compiler automatically constructs segm
 
 ![Segmentation hardware](images/segmentation_hardware.png)
 
-Although the programmer can now refer to objects in the program by a two-dimensional address (segment name and offset), the actual physical memory is still, of course, a onedimensional sequence of bytes. Thus, we must define an implementation to map two-dimensional programmer-defined addresses into one-dimensional physical addresses. This mapping is effected by a segment table. Each entry in the segment table has a segment base and a segment limit. The segment base contains the starting physical address where the segment resides in memory, and the segment limit specifies the length of the segment.
+Although the programmer can now refer to objects in the program by a two-dimensional address (segment name and offset), the actual physical memory is still, of course, a one dimensional sequence of bytes. Thus, we must define an implementation to map two-dimensional programmer-defined addresses into one-dimensional physical addresses. This mapping is effected by a segment table. Each entry in the segment table has a segment base and a segment limit. The segment base contains the starting physical address where the segment resides in memory, and the segment limit specifies the length of the segment.
 
 Segmentation can lead to external fragmentation. [Why?](https://www.quora.com/How-external-fragmentation-is-possible-in-memory-management-using-Segmentation-scheme-in-OS)
 

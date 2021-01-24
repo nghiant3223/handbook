@@ -2,6 +2,14 @@
 
 ![Layers in OSI model and Internet protocol suite](images/osi_model.png)
 
+The function of each layer:
+
+- Application: facilitates the user to use the services of the network
+- Transport: route application protocols to the correct application on the destination computer
+- Network: send and route packets from one node to others across multiple networks
+- Datalink: deliver packets between two node in the same network
+- Physical: send bit from one node to another
+
 We consider the bottom two layers of the OSI model as the device driver and networking hardware that are supplied with the system.
 
 The network layer is handled by the IPv4 and IPv6 protocols. The transport layers that we can choose from the TCP and UDP. There is a gap between TCP and UDP to indicate that **it is possible for an application to bypass the transport layer and use IPv4 or IPv6 directly**. This is called raw socket, more information [here](https://docs.microsoft.com/en-us/windows/win32/winsock/tcp-ip-raw-sockets-2).
