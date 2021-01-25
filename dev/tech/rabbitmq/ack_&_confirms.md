@@ -72,6 +72,6 @@ Applications can log returned messages, but logging does not provide a mechanism
 
 ## References
 
-- [Consumer Acknowledgements and Publisher Confirms
-](https://www.rabbitmq.com/confirms.html)
-- [Collecting Unroutable Messages in a RabbitMQ Alternate Exchange ](https://www.cloudamqp.com/blog/2020-09-25-collecting-unroutable-messages-in-a-rabbitmq-alternate-exchange.html)
+- [Batch ACK and NACK](https://stackoverflow.com/questions/38253380/rabbitmq-batch-ack)
+- [Consumer Acknowledgements and Publisher Confirms](https://www.rabbitmq.com/confirms.html)
+- [Collecting Unroutable Messages in a RabbitMQ Alternate Exchange](https://www.cloudamqp.com/blog/2020-09-25-collecting-unroutable-messages-in-a-rabbitmq-alternate-exchange.html)
