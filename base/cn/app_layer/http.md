@@ -17,25 +17,27 @@ Enabling the keep-alive header allows you to serve all web page resources over a
 | At most one object is sent over a single TCP connection | Multiple objects can be sent over a single TCP connection |
 | Requires 2 RTTs per object (one for TCP handshake and one for the object itself). Server closes the connection once the client has received the response. OS overhead for each TCP connection | Server leaves connection open after sending response. Subsequent HTTP messages same client and server is sent over the open connection. Client sends requests as soon as it encounters a referenced object
 
-## Non-persistent HTTP
+### Non-persistent HTTP
 
 ![Non-persistent HTTP 1](images/non-persistent-1.png)
 ![Non-persistent HTTP 2](images/non-persistent-2.png)
 ![Non-persistent HTTP 3](images/non-persistent-3.png)
 
-### Non-persistent HTTP with Parallel Connections
+#### Non-persistent HTTP with Parallel Connections
 
 ![Non-persistent HTTP 4](images/non-persistent-4.png)
 
-## Persistent HTTP
+### Persistent HTTP
 
 ![Persistent HTTP 1](images/persistent-1.png)
 
 When Persistent HTTP uses pipelining, requests for objects can be made back-to-back, without waiting for replies to pending requests (pipelining). Typically, the HTTP server closes a connection when it isn’t used for a certain time (a configurable timeout interval). When the server receives the back-to-back requests, it sends the objects back-to-back. The default mode of HTTP uses persistent connections with pipelining.
 
-## Practice Questions
+### Practice Questions
 
-**Questions**: Assume that you have base HTML file with 30 embedded images, images & base file are small enough to fit in one TCP segment. How many RTT are required to retrieve base file & images under-following condition:
+**Questions**:
+
+Assume that you have base HTML file with 30 embedded images, images & base file are small enough to fit in one TCP segment. How many RTT are required to retrieve base file & images under-following condition:
 (i) Non-Persistent connection without parallel connection
 (ii) Non-persistent connection with 10 parallel connection
 (iii) Persistent connection without pipe-lining
@@ -44,7 +46,9 @@ When Persistent HTTP uses pipelining, requests for objects can be made back-to-b
 
 **Explanation**:
 
-2RTT is the initial required connection one for TCP connection and one for HTML base file. `total time = 2RTT + transmit time`.
+2RTT is the initial required connection one for TCP connection and one for HTML base file.
+
+`total time = 2RTT + transmit time`.
 
 **(i) Non-Persistent connection with no parallel connection**:
 
