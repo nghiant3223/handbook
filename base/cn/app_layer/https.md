@@ -1,8 +1,4 @@
-# HTTP & HTTPS
-
-## HTTP
-
-## HTTPS
+# HTTPS
 
 ## Header
 

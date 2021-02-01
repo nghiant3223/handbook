@@ -95,16 +95,11 @@
 
 - Consumers can choose when to commit offset
 - There are 3 delivery semantics:
-  - At most once:
-    - Offsets are committed as soon as the message is delivered
-    - If the message goes wrong, the message will be lost (it won't be read again)
-  - At least once:
-    - Offsets are committed after the message is processed
-    - If the processing goes wrong, the message will be read again
-    - This can results in duplication processing of message. Make sure the processing is idempotent (i.e. processing the message again won't impact the system)
-    - Exactly once:
-      - Can be achieved for Kafka => Kafka workflows using Kafka Stream API
-      - For Kafka => External System workflows, use idempotent consumer
+  - At most once: An at-most-once scenario happens when the commit interval has occurred, and that in turn triggers Kafka to automatically commit the last used offset. Meanwhile, let us say the consumer did not get a chance to complete the processing of the messages and consumer has crashed. Now when consumer restarts, it starts to receive messages from the last committed offset, in essence consumer could lose a few messages in between.
+  - At least once: At-least-once scenario happens when consumer processes a message and commits the message into its persistent store and consumer crashes at that point. Meanwhile, let us say Kafka could not get a chance to commit the offset to the broker since commit interval has not passed. Now when the consumer restarts, it gets delivered with a few older messages from the last committed offset.
+  - Exactly once:
+    - Can be achieved for Kafka => Kafka workflows using Kafka Stream API
+    - For Kafka => External System workflows, use idempotent consumer
 
 ### Rebalance
 

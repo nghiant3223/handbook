@@ -7,7 +7,9 @@
 - [Partition Assignment Strategy](https://medium.com/@anyili0928/what-i-have-learned-from-kafka-partition-assignment-strategy-799fdf15d3ab)
 - [Reliable Reprocessing](https://eng.uber.com/reliable-reprocessing/)
 - [Retry Mechanism and Delay Queues in Apache Kafka](https://medium.com/naukri-engineering/retry-mechanism-and-delay-queues-in-apache-kafka-528a6524f722)
-
+- [Kafka Commit Strategies](https://quarkus.io/blog/kafka-commit-strategies/)
+- [At-most-once, At-least-once, Exactly-once in Kafka](https://dzone.com/articles/kafka-clients-at-most-once-at-least-once-exactly-o)
+- [Achieve Exactly-once in Kafka](https://www.baeldung.com/kafka-exactly-once)
 
 ## How to Choose the Number of Partitions
 
@@ -20,6 +22,6 @@ There are several factors to consider when choosing the number of partitions:
 - Consider the number of partitions you will place on each broker and available diskspace and network bandwidth per broker.
 - Avoid overestimating, as each partition uses memory and other resources on the broker and will increase the time for leader elections.
 
-With all this in mind, it’s clear that **you want many partitions but not too many**. If you have some estimate regarding the target throughput of the topic and the expected throughput of the consumers, you can divide the target throughput by the expected consumer throughput and derive the number of partitions this way. So if I want to be able to write and read 1 GB/sec from a topic, and I know each consumer can only process 50 MB/s, then I know I need at least 20 partitions. This way, I can have 20 consumers reading from the topic and achieve 1 GB/sec. 
+With all this in mind, it’s clear that **you want many partitions but not too many**. If you have some estimate regarding the target throughput of the topic and the expected throughput of the consumers, you can divide the target throughput by the expected consumer throughput and derive the number of partitions this way. So if I want to be able to write and read 1 GB/sec from a topic, and I know each consumer can only process 50 MB/s, then I know I need at least 20 partitions. This way, I can have 20 consumers reading from the topic and achieve 1 GB/sec.
 
 If you don’t have this detailed information, our experience suggests that limiting the size of the partition on the disk to less than 6 GB per day of retention often gives satisfactory results.
