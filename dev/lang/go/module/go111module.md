@@ -82,4 +82,3 @@ Again, these dependencies are stored in `$GOPATH/pkg/mod`.
 ## Reference
 
 - [Why is GO111MODULE everywhere and everything about modules](https://dev.to/maelvls/why-is-go111module-everywhere-and-everything-about-go-modules-24k)
-

@@ -21,3 +21,6 @@
 ## Concurrency
 
 - [Concurrency in Go](https://marcofranssen.nl/concurrency-in-go/)
+## Tutorial
+
+- [riptutorial.com - Go Tutorial](https://riptutorial.com/go)
