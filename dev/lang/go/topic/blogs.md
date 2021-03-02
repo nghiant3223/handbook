@@ -24,3 +24,8 @@
 ## Tutorial
 
 - [riptutorial.com - Go Tutorial](https://riptutorial.com/go)
+
+## Testing
+
+- [GoJek - Golang Integration Testing Made Easy](https://blog.gojekengineering.com/golang-integration-testing-made-easy-a834e754fa4c)
+- [Integration Testing with Databse in Golang](https://medium.com/hackernoon/integration-test-with-database-in-golang-355dc123fdc9)
