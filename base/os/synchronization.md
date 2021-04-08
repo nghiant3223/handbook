@@ -140,3 +140,8 @@ We've ended up covering all possibilities:
 | No Race Condition | Transfer 3| Transfer 2 |
 
 To sum it up, data race is completely different from race condition. Race conditions and data races are not subset of one another, neither the necessary, nor the sufficient condition for one another. There are considerable overlap: many race conditions are due to data races and many data races lead to race conditions. On the other hand: we can have race conditions without data races and data races without race conditions.
+
+## False Sharing
+
+False sharing is a term which applies when threads unwittingly impact the performance of each other while modifying independent variables sharing the same cache line. Write contention on cache lines is the single most limiting factor on achieving scalability for parallel threads of execution in an SMP system.
+
