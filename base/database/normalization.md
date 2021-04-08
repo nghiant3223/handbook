@@ -106,4 +106,4 @@ Table 2: state, country
 
 A relation R is in BCNF if R is in 3NF and for every functional dependency, its left-hand-side is super key. A relation is in BCNF iff in every non-trivial functional dependency X –> Y, X is a super key.
 
-Example, Find the highest normal form of a relation R(A,B,C,D,E) with FD set as {BC->D, AC->BE, B->E}
+Example,gs Find the highest normal form of a relation R(A,B,C,D,E) with FD set as {BC->D, AC->BE, B->E}

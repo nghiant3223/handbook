@@ -1,18 +1,12 @@
-# HTTP
+# Persistent Connection
 
-## Header
+## Concept
 
-### Keep Alive
+Persistent connection is a single TCP connection that remains open for many request/response.
 
-HTTP keep-alive, a.k.a., HTTP persistent connection, is an instruction that allows a single TCP connection to remain open for multiple HTTP requests/responses.
+## Non-persistent Connection vs. Persistent Connection
 
-By default, HTTP connections close after each request. When someone visits your site, their browser needs to create new connections to request each of the files that make up your web pages (e.g. images, Javascript, and CSS stylesheets), a process that can lead to high page load times.
-
-Enabling the keep-alive header allows you to serve all web page resources over a single connection. Keep-alive also reduces both CPU and memory usage on your server.
-
-## Non-persistent vs. Persistent HTTP
-
-| Nonpersistent | Persistent |
+| Non-persistent | Persistent |
 |---------------|------------|
 | At most one object is sent over a single TCP connection | Multiple objects can be sent over a single TCP connection |
 | Requires 2 RTTs per object (one for TCP handshake and one for the object itself). Server closes the connection once the client has received the response. OS overhead for each TCP connection | Server leaves connection open after sending response. Subsequent HTTP messages same client and server is sent over the open connection. Client sends requests as soon as it encounters a referenced object
@@ -62,7 +56,7 @@ Here 10 images can be send simultaneously.
 So for 30 images it required -> 2*(30/10) = 6RTT  
 Total time = 2 RTT + 6 RTT = 8RTT
 
-**(iii) Persistent connection without pipelining:**  
+**(iii) Persistent connection without pipelining:**
 
 Here TCP connection is required again and again.  
 So for 30 images it requires -> 30 RTTs  
@@ -74,9 +68,16 @@ Since it is persistent connection, TCP connection is not required again and agai
 In pipelining connection we can send all images in 1RTT.  
 Total time = 2 RTT + 1 RTT = 3RTT
 
-## References
+### Properties of Persistent Connection
 
-- [HTTP Keep-Alive](https://www.imperva.com/learn/performance/http-keep-alive/)
+#### MaxActiveConnection and MaxIdeConnection 
+
+In small environments, connections to databases are not a problem, because there aren't so many connections, and server resources are almost intact.
+
+In big environments, the number of connections to database consume a lot of resources, so, you need to optimize the manner you manage database connections, using the less possible number of connections will give you a better performance. In this point, maxActive set the max number of connections that can be made to the database by that pool, limiting the resources assigned to the requester. With maxIdle you specify that, if a connection "is idle" it will be closed, unless the number of idle connections is smaller or equal to "maxIdle". Why not less than maxIdle? Because you need some connections to be ready for next requests to the database, so you don't need to open and close again so many connections.
+
+### References
+
 - [Pipelining in Persistent HTTP](https://www.w3.org/Protocols/rfc2616/rfc2616-sec8.html)
 - [HTTP Non-Persistent & Persistent Connection | Set 1](https://www.geeksforgeeks.org/http-non-persistent-persistent-connection/)
 - [HTTP Non-Persistent & Persistent Connection | Set 2](https://www.geeksforgeeks.org/http-non-persistent-persistent-connection-set-2/?ref=rp)
