@@ -25,3 +25,46 @@ git commit --amend
 # Git diff
 - Diffing is a function that takes two input data sets and outputs the changes between them. git diff is a multi-use Git command that when executed runs a diff function on Git data sources. 
 - The git diff command is often used along with git status and git log to analyze the current state of a Git repo.
+### Comparing files: git diff file
+- The git diff command can be passed an explicit file path option. 
+- The below example is scoped to ./path/to/file when invoked, it will compare the specific changes in the working directory, against the index, showing the changes that are not staged yet.
+```
+git diff HEAD ./path/to/file
+```
+- Another example, this command will compare the staged changes with the local repository. The --cached option is synonymous with --staged.
+```
+git diff --cached ./path/to/file
+```
+### Comparing all changes
+- Invoking git diff without a file path will compare changes across the entire repository.
+### Changes since last commit
+- By default git diff will show you any uncommitted changes since the last commit.
+### Comparing files between two different commits
+- git diff can be passed Git refs to commits to diff. Some example refs are, HEAD, tags, and branch names. 
+- Every commit in Git has a commit ID which you can get when you execute GIT LOG. You can also pass this commit ID to git diff.
+```
+git log --prety=oneline
+957fbc92b123030c389bf8b4b874522bdf2db72c add feature
+ce489262a1ee34340440e55a0b99ea6918e19e7a rename some classes
+6b539f280d8b0ec4874671bae9c6bed80b788006 refactor some code for feature
+646e7863348a427e1ed9163a9a96fa759112f102 add some copy to body
+```
+### Comparing branches
+- Branches are compared like all other ref inputs to git diff.
+```
+git diff branch1..other-feature-branch
+```
+### Comparing files from two branches
+- To compare a specific file across branches, pass in the path of the file as the third argument to git diff
+```
+git diff main new_branch ./diff_test.txt
+```
+# Git stash
+- git stash temporarily shelves (or stashes) changes you've made to your working copy so you can work on something else, and then come back and re-apply them later on.
+### Stashing your work
+- The git stash command takes your uncommitted changes (both staged and unstaged), saves them away for later use, and then reverts them from your working copy.
+- Note that the stash is local to your Git repository; stashes are not transferred to the server when you push.
+### Re-applying your stashed changes
+- You can reapply previously stashed changes with git stash pop.
+- Popping your stash removes the changes from your stash and reapplies them to your working copy.
+- Alternatively, you can reapply the changes to your working copy and keep them in your stash with git stash apply.
