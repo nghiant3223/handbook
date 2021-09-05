@@ -25,7 +25,7 @@ git commit --amend
 # Git diff
 - Diffing is a function that takes two input data sets and outputs the changes between them. git diff is a multi-use Git command that when executed runs a diff function on Git data sources. 
 - The git diff command is often used along with git status and git log to analyze the current state of a Git repo.
-### Comparing files: git diff file
+## Comparing files: git diff file
 - The git diff command can be passed an explicit file path option. 
 - The below example is scoped to ./path/to/file when invoked, it will compare the specific changes in the working directory, against the index, showing the changes that are not staged yet.
 ```
@@ -67,4 +67,61 @@ git diff main new_branch ./diff_test.txt
 ### Re-applying your stashed changes
 - You can reapply previously stashed changes with git stash pop.
 - Popping your stash removes the changes from your stash and reapplies them to your working copy.
-- Alternatively, you can reapply the changes to your working copy and keep them in your stash with git stash apply.
+- Alternatively, you can reapply the changes to your working copy and keep them in your stash with git stash apply. This is useful if you want to apply the same stashed changes to multiple branches.
+### Stashing untracked or ignored files
+- By default, git stash will stash:
+  - Changes that have been added to your index (staged changes).
+  - Changes made to files that are currently tracked by Git (unstaged changes).
+- It will not stash:
+  - New files in your working copy that have not yet been staged.
+  - Files that have been ignored.
+- Adding the -u option tells git stash to also stash your untracked files.
+- Adding the -a option includes changes to ignored files as well.
+### Managing multiple stashes
+- You can run git stash several times to create multiple stashes, and then use git stash list to view them.
+- To annotate your stashes with a description, using git stash save "message".
+- By default, git stash pop will re-apply the most recently created stash: stash@{0}.
+- You can choose which stash to re-apply by passing its identifier as the last argument, for example:
+```
+git stash pop stash@{2}
+```
+### Viewing stash diffs
+- You can view a summary of a stash with git stash show.
+- Or pass the -p option (or --patch) to view the full diff of a stash.
+### Partial stashes
+- You can also choose to stash just a single file, a collection of files, or individual changes from within files. If you pass the -p option (or --patch) to git stash, it will iterate through each changed "hunk" in your working copy and ask whether you wish to stash it.
+### Creating a branch from your stash
+- You can use git stash branch to create a new branch to apply your stashed changes to:
+```
+$ git stash branch add-stylesheet stash@{1}
+Switched to a new branch 'add-stylesheet'
+On branch add-stylesheet
+Changes to be committed:
+
+    new file:   style.css
+
+Changes not staged for commit:
+
+    modified:   index.html
+
+Dropped refs/stash@{1} (32b3aa1d185dfe6d57b3c3cc3b32cbf3e380cc6a)
+```
+### Cleaning up your stash
+- If you decide you no longer need a particular stash, you can delete it with git stash drop:
+```
+$ git stash drop stash@{1}
+Dropped stash@{1} (17e2697fd8251df6163117cb3d58c1f62a5e7cdb)
+```
+- You can delete all of your stashes with git stash clear.
+# .gitignore
+- Git sees every file in your working copy as one of three things:
+  - tracked - a file which has been previously staged or committed.
+  - untracked - a file which has not been staged or committed.
+  - ignored - a file which Git has been explicitly told to ignore.
+- Ignored files are usually build artifacts and machine generated files that can be derived from your repository source or should otherwise not be committed. Some common examples are:
+  - dependency caches, such as the contents of /node_modules or /packages
+  - compiled code, such as .o, .pyc, and .class files
+  - build output directories, such as /bin, /out, or /target 
+  - files generated at runtime, such as .log, .lock, or .tmp
+  - hidden system files, such as .DS_Store or Thumbs.db
+  - personal IDE config files, such as .idea/workspace.xml
