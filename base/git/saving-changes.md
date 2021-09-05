@@ -1,3 +1,6 @@
+# Saving changes
+
+---
 - A commit is the Git equivalent of a "save". Traditional saving should be thought of as a file system operation that is used to overwrite an existing file or write a new file. Alternatively, Git committing is an operation that acts upon a collection of files and directories.
 - The stash is an ephemeral storage area for changes that are not ready to be committed. 
 - A Git repository can be configured to ignore specific files or directories. This will prevent Git from saving changes to any ignored content.
