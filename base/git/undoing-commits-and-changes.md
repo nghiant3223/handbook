@@ -53,3 +53,15 @@ Would remove untracked_dir/
 $ git clean -df
 Removing untracked_dir/
 ```
+- The -x option tells git clean to also include any ignored files.
+- The below example demonstrates a combination with -f that will remove untracked files from the current directory as well as any files that Git usually ignores.
+```
+git clean -xf
+```
+### Summary
+- git clean is a convenience method for deleting untracked files in a repo's working directory. Untracked files are those that are in the repo's directory but have not yet been added to the repo's index with git add.
+# Git revert
+- The git revert command can be considered an 'undo' type command.
+- It is not a traditional undo operation. Instead of removing the commit from the project history, it figures out how to invert the changes introduced by the commit and appends a new commit with the resulting inverse content.
+- This prevents Git from losing history, which is important for the integrity of your revision history and for reliable collaboration.
+### How it works
