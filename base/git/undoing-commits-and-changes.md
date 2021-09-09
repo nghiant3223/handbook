@@ -64,4 +64,28 @@ git clean -xf
 - The git revert command can be considered an 'undo' type command.
 - It is not a traditional undo operation. Instead of removing the commit from the project history, it figures out how to invert the changes introduced by the commit and appends a new commit with the resulting inverse content.
 - This prevents Git from losing history, which is important for the integrity of your revision history and for reliable collaboration.
+- Refs or references are the pointers to commits.
+- The HEAD (pointer) always points to the tip of our current branch in the repository.
 ### How it works
+- A revert operation will take the specified commit, inverse the changes from that commit, and create a new "revert commit".
+- The ref pointers are then updated to point at the new revert commit making it the tip of the branch.
+```
+git revert HEAD
+```
+- Git revert expects a commit ref was passed in and will not execute without one. Here we have passed in the HEAD ref. This will revert the latest commit.
+### Common options
+```
+-e
+--edit
+```
+- This is a default option and doesn't need to be specified. This option will open the configured system editor and prompts you to edit the commit message prior to committing the revert.
+```
+--no-edit
+```
+- This is the inverse of the -e option. The revert will not open the editor.
+```
+-n
+--no-commit
+```
+- Passing this option will prevent git revert from creating a new commit that inverses the target commit. Instead of creating the new commit this option will add the inverse changes to the Staging Index and Working Directory.
+# Git reset
