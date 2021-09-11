@@ -89,3 +89,63 @@ git revert HEAD
 ```
 - Passing this option will prevent git revert from creating a new commit that inverses the target commit. Instead of creating the new commit this option will add the inverse changes to the Staging Index and Working Directory.
 # Git reset
+### Git Reset & Three Trees of Git
+- Git's internal state management systems: Trees may be a misnomer, as they are not strictly traditional tree data-structures. They are, however, node and pointer-based data structures that Git uses to track a timeline of edits.
+- Three trees of Git (see https://www.atlassian.com/git/tutorials/undoing-changes/git-reset for more details):
+  - The working directory.
+  - Staging index.
+  - Commit history.
+### How it works
+- Where git checkout solely operates on the HEAD ref pointer, git reset will move the HEAD ref pointer and the current branch ref pointer.
+### Main Options
+#### --hard
+- This is the most direct, DANGEROUS, and frequently used option. When passed --hard The Commit History ref pointers are updated to the specified commit.
+- This command will reset back to last 2 commits:
+```
+git reset --hard HEAD~~
+```
+- The commit before reset can be referenced by the name ORIG_HEAD. In case of resetting by mistake, for example, if reset is in ORIG_HEAD, it is possible to return to the state before reset.
+#### --soft
+- See https://www.atlassian.com/git/tutorials/undoing-changes/git-reset for more details.
+#### --mixed
+- See https://www.atlassian.com/git/tutorials/undoing-changes/git-reset for more details.
+### Unstaging a file
+```
+git reset <<path_to_file>>
+```
+### Removing Local Commits
+- The git reset HEAD~2 command moves the current branch backward by two commits, effectively removing the two snapshots we just created from the project history.
+- Never perform the above operation if you’ve already pushed your commits to a shared repository.
+
+# HEAD
+### Git Detached HEAD
+- A detached HEAD occurs when you check out a commit that is not a branch. The term detached HEAD tells you that you are not viewing the HEAD of any repository.
+- The HEAD is the most recent version of a branch.
+- This is useful if you want to retrieve code you have overwritten in newer commits. You only need to check out the commit you want to view and then you can copy all the code you need from that commit.
+### Enter Into a Detached HEAD
+```
+Enter Into a Detached HEAD
+```
+- The ~3 tells Git we want to view our repository three commits relative to HEAD. HEAD is the most recent commit in a repository.
+- You are in ‘detached HEAD’ state. You can look around, make experimental changes and commit them, and you can discard any commits you make in this state without impacting any branches by performing another checkout.
+### Save Changes to a Detached HEAD
+- Once you enter into detached HEAD state, you can view and modify the files in a particular commit.
+- To save a change from a detached HEAD, you need to create a new Git branch:
+```
+git branch dev
+```
+- And you can merge it with the main branch.
+### Discard Changes in a Detached HEAD
+- Once you are done viewing a previous commit, you can go back to the HEAD of your repository.
+- First, we need to discard the changes we made using the Git reset command:
+```
+git reset --hard
+```
+- This command will make sure there are no conflicts when we want to move back to our master branch. Next, we can check out the HEAD of our master branch using the checkout command:
+```
+git checkout master
+```
+- This will change your current HEAD to the tip of the master branch. None of the changes you made in the detached HEAD state will be reflected on your repository.
+### Ref
+- [Git Detached HEAD Explanation](https://careerkarma.com/blog/git-head-detached-at/).
+  
