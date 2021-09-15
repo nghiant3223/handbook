@@ -52,5 +52,35 @@ operations team.
     issues arising.
   - Then building up to scaling.
   - Finally, supporting development of new product features.
+- By working with users and product teams, the SRE is able to
+  innovatively develop automated tools that result in better production
+  environments characterized by:
+  - Scalability
+  - Graceful degradation during failure
+  - Integration with other services and systems
+  - Additional benefits
+### SRE principles
+#### Embracing risk
+- SREs do not believe in 100% reliable services.
+- SRE seeks to balance the risk of unavailability with the goals of rapid innovation and efficient service operations, so that users’ overall happiness is optimized.
+#### Using Service Level Objectives
+- To understand and therefore deliver services that meet the needs of
+  users, service level objectives (SLOs) are used.
+- SLOs are a target value
+  or range of values for a service level that is measured by a Service Level
+  Indicator (SLI) such as:
+  - Availability
+  - Error rate
+  - Request latency
+  - Throughput
+  - Other indicators
+- The structure for SLOs is either:
+  - SLI ≤ target
+  - Lower bound ≤ SLI ≤ upper bound
+- Choosing and publishing SLOs to users sets expectations about how a
+  service will perform, which helps reduce unfounded complaints to
+  service owners about service performance (e.g., slowness).
+#### Eliminating toil
+
 ### ref
 - [SRE Basics: Site Reliability Engineering Explained](https://www.bmc.com/blogs/sre-site-reliability-engineering/)
