@@ -81,6 +81,45 @@ operations team.
   service will perform, which helps reduce unfounded complaints to
   service owners about service performance (e.g., slowness).
 #### Eliminating toil
-
+- Toil is operational activity tied to running a production service that tends to be manual, repetitive, automatable, tactical, devoid of enduring value, and that scales linearly as a service grows.
+- Sources of toil include:
+  - Interrupts (non-urgent service-related messages and emails)
+  - On-call (urgent) response
+  - Releases
+  - Pushes
+- The work of reducing toil and scaling up services is the “engineering”
+  part of SRE.
+#### Monitoring distributed systems
+- Monitoring is a key attribute of SRE with the goal being to find out what
+  is broken (or about to break) and why.
+- If a system cannot self-heal, then an SRE should investigate the alert, identify and mitigate the issues, and determine the root cause.
+- The priority metrics that SRE monitoring covers are:
+  - Latency
+  - Traffic
+  - Errors
+  - Saturation
+#### Automate
+- Automation is the raison d’être when it comes to SRE.
+- The benefits of automation include:
+  - Consistency
+  - Time saving
+  - Faster repairs and actions
+  - Providing a platform that can be extended to other services
+- The SRE writes code to automate management of the lifecycle of
+  systems infrastructure, not their data.
+#### Release engineering
+- The SRE supports developers and release engineers to ensure new
+  services and features are working well and can be supported in the
+  future.
+- The SRE will use tools developed by release engineers to ensure
+  projects are released using consistent and repeatable methodologies.
+  They will work together to develop strategies for:
+  - Canarying changes
+  - Pushing out new releases without interrupting services
+  - Rolling back features that demonstrate problems
+#### Simplicity
+- The SRE approach to managing systems is keeping agility and stability
+  in balance in the system.
+- The SRE teams try to eliminate complexity in systems they onboard and for which they assume operational responsibility.
 ### ref
 - [SRE Basics: Site Reliability Engineering Explained](https://www.bmc.com/blogs/sre-site-reliability-engineering/)
