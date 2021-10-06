@@ -9,3 +9,4 @@
 - To prevent single `INSERT`, `UPDATE` for multiple records, try `INSERT ... ON CONFLICT DO UPDATE` for batch upsert
 - Use `utf8mb4` encoding for string that requires emojis
 - Use `utf8mb4` encoding and `utf8mb4_bin` collation for string that requires accent-sensitive
+- Index may not be used even when their key parts appear in `WHERE`, it's up to the query optimizer whether to use the index or not
