@@ -6,3 +6,4 @@
 - Transaction should be as small as possible
 - Do not name column after 'key', it causes syntax error
 - Whenever you encounter deadlocks, try adding reasonable indices to prevent range scan
+- To prevent single `INSERT`, `UPDATE` for multiple records, try `INSERT ... ON CONFLICT DO UPDATE` for batch upsert
