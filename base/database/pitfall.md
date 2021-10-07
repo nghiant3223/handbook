@@ -10,3 +10,4 @@
 - Use `utf8mb4` encoding for string that requires emojis
 - Use `utf8mb4` encoding and `utf8mb4_bin` collation for string that requires accent-sensitive
 - Index may not be used even when their key parts appear in `WHERE`, it's up to the query optimizer whether to use the index or not
+- If you have a column of type number `X` that must be positive you have a business to decrement it, make your query look like `UPDATE ... SET X=X-1 WHERE X >= 0` for safety.
