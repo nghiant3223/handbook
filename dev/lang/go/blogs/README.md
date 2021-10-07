@@ -11,3 +11,4 @@
 - <https://www.mohitkhare.com/categories/golang>
 - <https://peter.bourgon.org/blog/>
 - <https://hyeomans.com/>
+- <https://dave.cheney.net/>
