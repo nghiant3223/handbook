@@ -26,6 +26,21 @@ MySQL supports a large variety of data types, and choosing the correct type to s
 
   There are exceptions, of course. For example, it’s worth mentioning that InnoDB stores NULL with a single bit, so it can be pretty space-efficient for sparsely populated data. This doesn’t apply to MyISAM, though.
   
-### Differences between **DATETIME** and **TIMESTAMP**
+A DATETIME and a TIMESTAMP column can store the same kind of data: date and time, to a precision of one second. However, TIMESTAMP uses only half as much storage space, is time zone–aware, and has special autoupdating capabilities. On the other hand, it has a much smaller range of allowable values, and 
+sometimes its special capabilities can be a handicap.
 
-a DATETIME and a TIMESTAMP column can store the same kind of data: date and time, to a precision of one second. However, TIMESTAMP uses only half as much storage space, is time zone–aware, and has special autoupdating capabilities. On the other hand, it has a much smaller range of allowable values, and sometimes its special capabilities can be a handicap.
+## Whole Numbers
+
+If you’re storing whole numbers, use one of the integer types: TINYINT, SMALLINT, MEDIUMINT, INT, or BIGINT. These require 8, 16, 24, 32, and 64 bits of storage space, respectively. They can store values from −2(N–1) to 2(N–1)–1, where N is the number of bits of storage space they use.
+
+Signed and unsigned types use the same amount of storage space and have the same performance, so use whatever’s best for your data range. Your choice determines how MySQL stores the data, in memory and on disk. However, integer computations generally use 64-bit BIGINT integers, even on 32-bit architectures. (The exceptions are some aggregate functions, which use DECIMAL or DOUBLE to perform computations.)
+
+## Real Numbers
+
+DECICMAL, FLOAT and DOUBLE can be specified by the following parameters (size, d). Where size is the total size of the String, and d represents precision. E.g: to store a number like 1234.567, you will set the datatype to DOUBLE(7, 3) where 7 is the total number of digits and 3 is the number of digits to follow the decimal point.
+
+FLOAT and DOUBLE, both represent floating point numbers. A FLOAT is for single-precision, while a DOUBLE is for double-precision numbers. A precision from 0 to 23 results in a 4-byte single-precision FLOAT column. A precision from 24 to 53 results in an 8-byte double-precision DOUBLE column. FLOAT is accurate to approximately 7 decimal places, and DOUBLE upto 14.
+
+Decimal’s declaration and functioning is similar to Double. But there is one big difference between floating point values and decimal (numeric) values. We use DECIMAL data type to store exact numeric values, where we do not want precision but exact and accurate values. A Decimal type can store a Maximum of 65 Digits, with 30 digits after decimal point. So, for the most accurate and precise value, Decimal would be the best option.
+
+Read more about MySQL numeric datatypes [here](https://code.rohitink.com/2013/06/12/mysql-integer-float-decimal-data-types-differences/).
