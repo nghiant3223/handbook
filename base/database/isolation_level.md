@@ -15,3 +15,6 @@ REPEATABLE READ solves the problems that READ UNCOMMITTED allows. It guarantees 
 ## SERIALIZABLE
 
 The highest level of isolation, SERIALIZABLE, solves the phantom read problem by forcing transactions to be ordered so that they can’t possibly conflict. In a nutshell, SERIALIZABLE places a lock on every row it reads. At this level, a lot of timeouts and lock contention can occur. We’ve rarely seen people use this isolation level, but your application’s needs might force you to accept the decreased concurrency in favor of the data stability that results.
+
+## Summary
+![SQL Isolation Levels](images/sql_isolation_level.png)
