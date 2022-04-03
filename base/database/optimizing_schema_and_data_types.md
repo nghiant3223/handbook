@@ -44,3 +44,13 @@ FLOAT and DOUBLE, both represent floating point numbers. A FLOAT is for single-p
 Decimal’s declaration and functioning is similar to Double. But there is one big difference between floating point values and decimal (numeric) values. We use DECIMAL data type to store exact numeric values, where we do not want precision but exact and accurate values. A Decimal type can store a Maximum of 65 Digits, with 30 digits after decimal point. So, for the most accurate and precise value, Decimal would be the best option.
 
 Read more about MySQL numeric datatypes [here](https://code.rohitink.com/2013/06/12/mysql-integer-float-decimal-data-types-differences/).
+
+## String Types
+
+### VARCHAR and CHAR types
+
+VARCHAR stores variable-length character strings and is the most common string data type. It can require less storage space than fixed-length types, because it uses only as much space as it needs (i.e., less space is used to store shorter values). 
+
+VARCHAR uses 1 or 2 extra bytes to record the value’s length: 1 byte if the column’s maximum length is 255 bytes or less, and 2 bytes if it’s more. Assuming the latin1 character set, a VARCHAR(10) will use up to 11 bytes of storage space. A VARCHAR(1000) can use up to 1002 bytes, because it needs 2 bytes to store length information.
+
+VARCHAR helps performance because it saves space. However, because the rows are variable-length, they can grow when you update them, which can cause extra work. If a row grows and no longer fits in its original location, the behavior is storage engine–dependent. For example, MyISAM may fragment the row, and InnoDB may need to split the page to fit the row into it. Other storage engines may never update data in-place at all.
