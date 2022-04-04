@@ -49,8 +49,34 @@ Read more about MySQL numeric datatypes [here](https://code.rohitink.com/2013/06
 
 ### VARCHAR and CHAR types
 
+#### VARCHAR
+
 VARCHAR stores variable-length character strings and is the most common string data type. It can require less storage space than fixed-length types, because it uses only as much space as it needs (i.e., less space is used to store shorter values). 
 
 VARCHAR uses 1 or 2 extra bytes to record the value’s length: 1 byte if the column’s maximum length is 255 bytes or less, and 2 bytes if it’s more. Assuming the latin1 character set, a VARCHAR(10) will use up to 11 bytes of storage space. A VARCHAR(1000) can use up to 1002 bytes, because it needs 2 bytes to store length information.
 
 VARCHAR helps performance because it saves space. However, because the rows are variable-length, they can grow when you update them, which can cause extra work. If a row grows and no longer fits in its original location, the behavior is storage engine–dependent. For example, MyISAM may fragment the row, and InnoDB may need to split the page to fit the row into it. Other storage engines may never update data in-place at all.
+
+#### CHAR
+
+CHAR is fixed-length: MySQL always allocates enough space for the specified num- ber of characters. When storing a CHAR value, MySQL removes any trailing spaces. Values are padded with spaces as needed for comparisons.
+
+CHAR is useful if you want to store very short strings, or if all the values are nearly the same length. For example, CHAR is a good choice for MD5 values for user pass- words, which are always the same length. CHAR is also better than VARCHAR for data that’s changed frequently, because a fixed-length row is not prone to fragmenta- tion. For very short columns, CHAR is also more efficient than VARCHAR; a CHAR(1) designed to hold only Y and N values will use only one byte in a single-byte character set,1 but a VARCHAR(1) would use two bytes because of the length byte.
+
+The sibling types for CHAR and VARCHAR are BINARY and VARBINARY, which store binary strings. Binary strings are very similar to conventional strings, but they store bytes instead of characters. Padding is also different: MySQL pads BINARY values with \0 (the zero byte) instead of spaces and doesn’t strip the pad value on retrieval.
+
+These types are useful when you need to store binary data and want MySQL to compare the values as bytes instead of characters. The advantage of byte-wise comparisons is more than just a matter of case insensitivity. MySQL literally compares BINARY strings one byte at a time, according to the numeric value of each byte. As a result, binary comparisons can be much simpler than character comparisons, so they are faster.
+
+### BLOB and TEXT types
+
+BLOB and TEXT are string data types designed to store large amounts of data as either binary or character strings, respectively.
+
+In fact, they are each families of data types: the character types are TINYTEXT, SMALL TEXT, TEXT, MEDIUMTEXT, and LONGTEXT, and the binary types are TINYBLOB, SMALLBLOB, BLOB, MEDIUMBLOB, and LONGBLOB. BLOB is a synonym for SMALLBLOB, and TEXT is a synonym for SMALLTEXT.
+
+The only difference between the BLOB and TEXT families is that BLOB types store binary data with no collation or character set, but TEXT types have a character set and collation.
+
+### Using ENUM instead of a string type
+
+The biggest downside of **ENUM** is that the list of strings is fixed, and adding or removing strings requires the use of **ALTER TABLE**. Thus, it might not be a good idea to use **ENUM** as a string data type when the list of allowed string values is likely to change arbitrarily in the future, unless it’s acceptable to add them at the end of the list, which can be done without a full rebuild of the table in MySQL 5.1.
+
+Because MySQL stores each value as an integer and has to do a lookup to convert it to its string representation, **ENUM** columns have some overhead.  In particular, it can be slower to join a **CHAR** or **VARCHAR** column to an **ENUM** column than to another **CHAR** or **VARCHAR** column.
