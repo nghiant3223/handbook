@@ -80,3 +80,89 @@ The only difference between the BLOB and TEXT families is that BLOB types store 
 The biggest downside of **ENUM** is that the list of strings is fixed, and adding or removing strings requires the use of **ALTER TABLE**. Thus, it might not be a good idea to use **ENUM** as a string data type when the list of allowed string values is likely to change arbitrarily in the future, unless it’s acceptable to add them at the end of the list, which can be done without a full rebuild of the table in MySQL 5.1.
 
 Because MySQL stores each value as an integer and has to do a lookup to convert it to its string representation, **ENUM** columns have some overhead.  In particular, it can be slower to join a **CHAR** or **VARCHAR** column to an **ENUM** column than to another **CHAR** or **VARCHAR** column.
+
+### Date and Time Types
+
+The finest granularity of time MySQL can store is one second.
+
+#### DATETIME
+
+This type can hold a large range of values, from the year 1000 to the year 9999, with a precision of one second. It stores the date and time packed into an integer in YYYYMMDDHHMMSS format, independent of time zone. This uses eight bytes of storage space.
+By default, MySQL displays DATETIME values in a sortable, unambiguous format, such as 2008-01-16 22:37:08. This is the ANSI standard way to represent dates and times.
+
+#### TIMESTAMP
+
+As its name implies, the TIMESTAMP type stores the number of seconds elapsed since 1970-01-01 00:00:00, Greenwich Mean Time--the same as a Unix timestamp. TIMESTAMP uses only four bytes of storage, so it has a much smaller range than DATETIME: from the year 1970 to   the year 2038.
+
+The value a TIMESTAMP displays also depends on the time zone. The MySQL server, operating system, and client connections all have time zone settings.
+
+Thus, a TIMESTAMP that stores the value 0 actually displays it as 1969-12-31 19:00:00 in Eastern Standard Time (EST), which is -5 timezone. It’s worth emphasizing this difference: if you store or access data from multiple time zones, the behavior of TIMESTAMP and DATETIME will be very different. The former preserves values relative to the time zone in use, while the latter preserves the textual representation of the date and time.
+
+Special behavior aside, in general if you can use TIMESTAMP you should, because it is more space-efficient than DATETIME. Sometimes people store Unix timestamps as integer values, but this usually doesn’t gain you anything. The integer format is often less convenient to deal with, so we do not recommend doing this.
+
+### Choosing Identifiers
+
+When choosing a type for an identifier column, you need to consider not only the storage type, but also how MySQL performs computations and comparisons on that type. For example, MySQL stores ENUM and SET types internally as integers but converts them to strings when doing comparisons in a string context.
+
+Once you choose a type, make sure you use the same type in all related tables. Choose the smallest size that can hold your required range of values, and leave room for future growth if necessary. A TINYINT should be sufficient and is three bytes smaller. If you use this value as a foreign key in other tables, three bytes can make a big difference.
+
+Here are a few tips:
+- Integer types: Integers are usually the best choice for identifiers, because they’re fast and they work with ** AUTO_INCREMENT**.
+- **ENUM** and **SET**: The **ENUM** and **SET** types are generally a poor choice for identifiers, though they can be okay for static “definition tables” that contain status or “type” values. **ENUM** and **SET** columns are appropriate for holding information such as an order’s status, a product’s type, or a person’s gender.
+- String types: Avoid string types for identifiers if possible, because they take up a lot of space and are generally slower than integer types. You should also be very careful with completely “random” strings, such as those produced by MD5(), SHA1(), or UUID(). Each new value you generate with them will be distributed in arbitrary ways over a large space, which can slow INSERT and some types of SELECT queries:
+  - They slow INSERT queries because the inserted value has to go in a random location in indexes. This causes page splits, random disk accesses, and clus- tered index fragmentation for clustered storage engines. More about this in the next chapter.
+  - They slow SELECT queries because logically adjacent rows will be widely dis- persed on disk and in memory.
+  - Random values cause caches to perform poorly for all types of queries because they defeat locality of reference, which is how caching works. If the entire dataset is equally “hot,” there is no advantage to having any particular part of the data cached in memory, and if the working set does not fit in memory, the cache will have a lot of flushes and misses.
+
+## Normalization and Denormalization
+
+### Pros and Cons of a Normalized Schema
+
+- Inserts, updates on normalized schemas are usually fasster than denormalized schemas.
+- There is little or no duplicated data, so there's less data to change.
+- Normalized tables are usually smaller, so they fit better in memory and perform better.
+- The lack of reduntdant data means there's less need for DISTINCT or GROUP BY queries.
+
+The drawbacks of a normalized schema usually have to do with retrieval. Any nontrivial query on a well-normalized schema will probably require at least one join, and perhaps several. This is not only expensive, but it can make some indexing strategies impossible. For example, normalizing may place columns in different tables that would benefit from belonging to the same index.
+
+### Pros and Cons of a Denormalized Schema
+
+A denormalized schema works well because everything is in the same table, which avoids joins. If you don’t need to join tables, the worst case for most queries—even the ones that don’t use indexes—is a full table scan. This can be much faster than a join when the data doesn’t fit in memory, because it avoids random I/O.
+
+A single table can also allow more efficient indexing strategies. Suppose you have a website where users post their messages, and some users are premium users. Now say you want to view the last 10 messages from premium users. If you’ve normalized the schema and indexed the publishing dates of the messages, the query might look like this:
+
+```sql
+SELECT message_text, user_name
+FROM message
+INNER JOIN user ON message.user_id=user.id
+WHERE user.account_type='premiumv
+ORDER BY message.published DESC LIMIT 10;
+```
+
+To execute this query efficiently, MySQL will need to scan the published index on the message table. For each row it finds, it will need to probe into the user table and check whether the user is a premium user. This is inefficient if only a small fraction of users have premium accounts.
+
+The other possible query plan is to start with the user table, select all premium users, get all messages for them, and do a filesort. This will probably be even worse.
+
+The problem is the join, which is keeping you from sorting and filtering simultaneously with a single index. If you denormalize the data by combining the tables and add an index on(account_type, published), you can write the query without a join. This will be very efficient:
+
+```sql
+SELECT message_text,user_name
+FROM user_messages
+WHERE account_type='premium'
+ORDER BY published DESC
+LIMIT 10;
+```
+
+### A Mixture of Normalized and Denormalized
+
+Fully normalized and fully denormalized schemas are like laboratory rats: they usually have little to do with the real world. In the real world, you often need to mix the approaches, possibly using a partially normalized schema, cache tables, and other techniques. The most common way to denormalize data is to **duplicate, or cache, selected columns from one table in another table**.
+
+In our website example, for instance, instead of denormalizing fully you can store account_type in both the user and message tables. This avoids the insert and delete problems that come with full denormalization, because you never lose information about the user, even when there are no messages. It won’t make the user_message table much larger, but it will let you select the data efficiently.
+
+However, it’s now more expensive to update a user’s account type, because you have to change it in both tables. To see whether that’s a problem, you must consider how frequently you’ll have to make such changes and how long they will take, compared to how often you’ll run the SELECT query.
+
+Another good reason to move some data from the parent table to the child table is for sorting. For example, it would be extremely expensive to sort messages by the author’s name on a normalized schema, but you can perform such a sort very efficiently if you cache the author_name in the message table and index it.
+
+It can also be useful to cache derived values. If you need to display how many messages each user has posted (as many forums do), either you can run an expensive subquery to count the data every time you display it, or you can have a num_messages column in the user table that you update whenever a user posts a new message.
+
+## Cache and 
