@@ -165,4 +165,6 @@ Another good reason to move some data from the parent table to the child table i
 
 It can also be useful to cache derived values. If you need to display how many messages each user has posted (as many forums do), either you can run an expensive subquery to count the data every time you display it, or you can have a num_messages column in the user table that you update whenever a user posts a new message.
 
-## Cache and 
+## Cache and Summary Tables
+
+
