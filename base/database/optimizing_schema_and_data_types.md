@@ -192,3 +192,46 @@ AND posted < CONCAT(LEFT(NOW(), 14), '00:00') - INTERVAL 23 HOUR;
 SELECT COUNT(*) FROM message
 WHERE posted >= CONCAT(LEFT(NOW(), 14), '00:00');
 ```
+
+### Materialized Views
+
+These are views that are actually precomputed and stored as tables on disk, and can be refreshed and updated through various strategies.
+
+### Counter Tables
+
+An application that keeps counts in a table can run into concurrency problems when updating the counters. Such tables are very common in web applications. You can use them to cache the number of friends a user has, the number of downloads of a file, and so on. It’s often a good idea to build a separate table for the counters, to keep it small and fast. Using a separate table can help you avoid query cache invalidations and lets you use some of the more advanced techniques we show in this section.
+
+To keep things as simple as possible, suppose you have a counter table with a single row that just counts hits on your website:
+
+```sql
+CREATE TABLE hit_counter (
+  cnt int unsigned not null
+) ENGINE=InnoDB;
+```
+
+Each hit on the website updates the counter:
+
+```sql
+UPDATE hit_counter SET cnt = cnt + 1;
+```
+
+The problem is that this single row is effectively a global “mutex” for any transaction that updates the counter. It will serialize those transactions. You can get higher con- currency by keeping more than one row and updating a random row. This requires the following change to the table:
+
+```sql
+CREATE TABLE hit_counter (
+  slot tinyint unsigned not null primary key, 
+  cnt int unsigned not null
+) ENGINE=InnoDB;
+```
+
+Prepopulate the table by adding 100 rows to it. Now the query can just choose a random slot and update it:
+
+```sql
+UPDATE hit_counter SET cnt = cnt + 1 WHERE slot = RAND() * 100;
+```
+
+To retrieve statistics, just use aggregate queries:
+
+```sql
+SELECT SUM(cnt) FROM hit_counter;
+```
