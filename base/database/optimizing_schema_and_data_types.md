@@ -167,4 +167,28 @@ It can also be useful to cache derived values. If you need to display how many m
 
 ## Cache and Summary Tables
 
+Staying with the website example, suppose you need to count the number of messages posted during the previous 24 hours. It would be impossible to maintain an accurate real-time counter on a busy site. Instead, you could generate a summary table every hour. You can often do this with a single query, and it’s more efficient than maintaining counters in real time. The drawback is that the counts are not 100% accurate.
 
+If you need to get an accurate count of messages posted during the previous 24-hour period (with no staleness), there is another option. Begin with a per-hour summary table. You can then count the exact number of messages posted in a given 24-hour period by adding the number of messages in the 23 whole hours contained in that period, the partial hour at the beginning of the period, and the partial hour at the end of the period. Suppose your summary table is called msg_per_hr and is defined as follows:
+
+```sql
+CREATE TABLE msg_per_hr (
+hr DATETIME NOT NULL,
+cnt INT UNSIGNED NOT NULL, PRIMARY KEY(hr)
+);
+```
+
+You can find the number of messages posted in the previous 24 hours by adding the resultsofthefollowingthreequeries.We’reusingLEFT(NOW(), 14)toroundthecurrent date and time to the nearest hour:
+
+```sql
+SELECT SUM(cnt) FROM msg_per_hr WHERE hr BETWEEN
+CONCAT(LEFT(NOW(), 14), '00:00') - INTERVAL 23 HOUR
+AND CONCAT(LEFT(NOW(), 14), '00:00') - INTERVAL 1 HOUR; 
+
+SELECT COUNT(*) FROM message
+WHERE posted >= NOW() - INTERVAL 24 HOUR
+AND posted < CONCAT(LEFT(NOW(), 14), '00:00') - INTERVAL 23 HOUR;
+
+SELECT COUNT(*) FROM message
+WHERE posted >= CONCAT(LEFT(NOW(), 14), '00:00');
+```
