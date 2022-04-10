@@ -235,3 +235,37 @@ To retrieve statistics, just use aggregate queries:
 ```sql
 SELECT SUM(cnt) FROM hit_counter;
 ```
+
+> **Faster Reads, Slower Writes**.  
+You’ll often need extra indexes, redundant fields, or even cache and summary tables to speed up read queries. These add work to write queries and maintenance jobs, but this is still a technique you’ll see a lot when you design for high performance: you amortize the cost of the slower writes by speeding up reads significantly. 
+However, this isn’t the only price you pay for faster read queries. You also increase development complexity for both read and write operations.
+
+## Speeding Up ALTER TABLE
+
+MySQL’s **ALTER TABLE** performance can become a problem with very large tables. MySQL performs most alterations by making an empty table with the desired new structure, inserting all the data from the old table into the new one, and deleting the old table. This can take a very long time, especially if you’re short on memory and the table is large and has lots of indexes. Many people have experience with **ALTER TABLE** operations that have taken hours or days to complete.
+
+MySQL 5.1 and newer include support for some types of “online” operations that won’t lock the table for the whole operation. Recent versions of InnoDB also support building indexes by sorting, which makes building indexes much faster and results in a compact index layout.
+
+Not all ALTER TABLE operations cause table rebuilds. For example, you can change or drop a column’s default value in two ways (one fast, and one slow). Say you want to change a film’s default rental duration from three to five days. Here’s the expensive way:
+
+```sql
+ALTER TABLE sakila.film
+MODIFY COLUMN rental_duration TINYINT(3) NOT NULL DEFAULT 5;
+```
+
+In theory, MySQL could have skipped building a new table. The default value for the column is actually stored in the table’s .frm file, so you should be able to change it without touching the table itself. MySQL doesn’t yet use this optimization, however; any MODIFY COLUMN will cause a table rebuild.
+You can change a column’s default with ALTER COLUMN, though: 
+
+```sql
+ALTER TABLE sakila.film
+ALTER COLUMN rental_duration SET DEFAULT 5;
+```
+
+This statement modifies the .frm file and leaves the table alone. As a result, it is very fast.
+
+### Modifying Only the .frm File
+
+You can potentially do the following types of operations without a table rebuild:
+
+- Remove (but not add) a column’s AUTO_INCREMENT attribute.
+- Add, remove, or change ENUM and SET constants. If you remove a constant and some rows contain that value, queries will return the value as the empty string.
