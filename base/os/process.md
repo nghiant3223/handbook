@@ -25,7 +25,7 @@
 | From | To | Description |
 | ---- | -- | ----------- |
 | Running | Waiting | When a running job requests I/O or makes system call, the job changes state from running to waiting |
-| Running | Ready | When an I/O requests or system call completes, the running job changes state from running to ready
+| Running | Ready | When an interrupt is generated or the scheduler algorithm swaps out the current running process
 | Waiting | Ready | When an I/O requests or system call completes, the job waiting for the request to complete changes state from waiting to ready
 | Ready | Running | When an I/O requests or ssytem call completes, one of the ready jobs are selected to run on the CPU and changes state from ready to running
 

@@ -26,19 +26,12 @@ Threads of a process share:
 
 ## Multithreading Models
 
-- Many to One: N user threads are multiplexed to 1 kernel thread. This has the advantage of being very quick to context switch but cannot take advantage of multi-core systems.
-- One to One: 1 user thread is multiplexed to 1 kernel thread. It takes advantage of all of the cores on the machine, but context switching is slow because it has to trap through the OS.
-- Many to Many: N user threads are multiplexed to N kernel thread. You get quick context switches and you take advantage of all the cores in your system. The main disadvantage of this approach is the complexity it adds to the scheduler.
+- Many to One: The many-to-one model maps many user-level threads to one kernel thread. Thread management is done by the thread library in user space, so it is efficient. However, the entire process will block if a thread makes a blocking system call. Also, because only one thread can access the kernel at a time, multiple threads are unable to run in parallel on multicore systems. 
 
-In Many to One model, when a user thread making an I/O request, all other threads are also blocked. The reason is that while waiting for I/O, kernel thread is in waiting state and not scheduled any CPU.
+- One to One: The one-to-one model maps each user thread to a kernel thread. It provides more concurrency than the many-to-one model by allowing another thread to run when a thread makes a blocking system call. It also allows multiple threads to run in parallel on multiprocessors. The only drawback to this model is that creating a user thread requires creating the corresponding kernel thread. Because the overhead of creating kernel threads can burden the performance of an application, most implementations of this model restrict the number of threads supported by the system. Linux, along with the family of Windows operating systems, implement the one-to-one model. 
+
+- Many to Many: N user threads are multiplexed to N kernel thread. Whereas the manyto-one model allows the developer to create as many user threads as she wishes, it does not result in true concurrency, because the kernel can schedule only one thread at a time. The one-to-one model allows greater concurrency, but the developer has to be careful not to create too many threads within an application (and in some instances may be limited in the number of threads she can create). The many-to-many model suffers from neither of these shortcomings: developers can create as many user threads as necessary, and the corresponding kernel threads can run in parallel on a multiprocessor. Also, when a thread performs a blocking system call, the kernel can schedule another thread for execution.
 
 ## Signal
 
 A signal is a notification sent to a process in order to notify it of an event that occured. When the signal is sent, the OS interrupts the target process's normal flow of execution to deliver the signal. If the process has previously registered a signal handler, that routine is executed. Otherwise, the default signal handler is executed.
-
-## Reference
-
-- [Race Condition vs. Data Race](https://blog.regehr.org/archives/490)
-- [What is a Race Condition?](https://www.baeldung.com/cs/race-conditions)
-- [Race Conditions versus Data Races](https://www.modernescpp.com/index.php/race-condition-versus-data-race)
-- [Are “data races” and “race condition” the same thing](https://stackoverflow.com/a/18049303)

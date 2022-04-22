@@ -12,6 +12,14 @@ By careful controlling which variable are modified inside and outside the critic
 
 The requirement of ensuring that no two concurrent processes or threads are in their critial section at the same time.
 
+## Mutex Locks
+
+We use the mutex lock to protect critical regions and thus prevent race conditions. That is, a process must acquire the lock before entering a critical section; it releases the lock when it exits the critical section.
+
+## Semaphores
+
+Semaphores are used to limit the concurrency rate of multiple threads. A semaphore with size one is called a binary semaphore, which is equivalent to mutex.
+
 ## Race Condition vs. Data Race
 
 A data race occurs when 2 instructions from different threads access the same memory location, at least one of these accesses is a write and there is no synchronization that is mandating any particular order among these accesses.
@@ -145,3 +153,11 @@ To sum it up, data race is completely different from race condition. Race condit
 
 False sharing is a term which applies when threads unwittingly impact the performance of each other while modifying independent variables sharing the same cache line. Write contention on cache lines is the single most limiting factor on achieving scalability for parallel threads of execution in an SMP system.
 
+## Deadlocks
+
+## Reference
+
+- [Race Condition vs. Data Race](https://blog.regehr.org/archives/490)
+- [What is a Race Condition?](https://www.baeldung.com/cs/race-conditions)
+- [Race Conditions versus Data Races](https://www.modernescpp.com/index.php/race-condition-versus-data-race)
+- [Are “data races” and “race condition” the same thing](https://stackoverflow.com/a/18049303)

@@ -166,3 +166,111 @@ Covering indexes can be a very powerful tool and can dramatically improve perfor
 - Index entries are usually much smaller than the full row size, so MySQL can access significantly less data if it reads only the index. 
 - Indexes are sorted by their index values (at least within the page), so I/O-bound range accesses will need to do less I/O compared to fetching each row from a random disk location.
 - Covering indexes are especially helpful for InnoDB tables, because of InnoDB’s clustered indexes. InnoDB’s secondary indexes hold the row’s primary key values at their leaf nodes. Thus, a secondary index that covers a query avoids another index lookup in the primary key.
+
+### Using Index Scans for Sorts
+
+Suppose we the following table with an index on `(rental_date, invetory_id, customer_id)`:
+
+```sql
+CREATE TABLE rental 
+    PRIMARY KEY (rental_id),
+    UNIQUE KEY rental_date (rental_date,inventory_id,customer_id), KEY idx_fk_inventory_id (inventory_id),
+    KEY idx_fk_customer_id (customer_id),
+    KEY idx_fk_staff_id (staff_id)
+);
+```
+
+The following query works, even though the ORDER BY clause isn’t itself a leftmost prefix of the index, because we specified an equality condition for the first column in the index.
+
+```sql
+... WHERE rental_date = '2005-05-25' ORDER BY inventory_id, customer_id
+```
+
+Here are some more queries that can use the index for sorting. This one works because the query provides a constant for the first column of the index and specifies an ORDER BY on the second column. Taken together, those two form a leftmost prefix on the index:
+
+```sql
+... WHERE rental_date = '2005-05-25' ORDER BY inventory_id DESC;
+```
+
+The following query also works, because the two columns in the ORDER BY area leftmost prefix of the index:
+```sql
+... WHERE rental_date > '2005-05-25' ORDER BY rental_date, inventory_id;
+```
+
+Here are some queries that cannot use the index for sorting: 
+- This query uses two different sort directions, but the index’s columns are all sorted ascending:
+
+```sql
+... WHERE rental_date = '2005-05-25' ORDER BY inventory_id DESC, customer_id ASC;
+```
+
+- Here, the ORDER BY refers to a column that isn’t in the index:
+```sql
+... WHERE rental_date = '2005-05-25' ORDER BY inventory_id, staff_id;
+```
+
+- Here, the WHERE and the ORDER BY don’t form a leftmost prefix of the index:
+```sql
+... WHERE rental_date = '2005-05-25' ORDER BY customer_id;
+```
+
+- This query has a range condition on the first column, so MySQL doesn’t use the rest of the index:
+```sql
+... WHERE rental_date > '2005-05-25' ORDER BY inventory_id, customer_id;
+```
+
+- Here there’s a multiple equality on the inventory_id column. For the purposes of sorting, this is basically the same as a range:
+
+```sql
+... WHERE rental_date = '2005-05-25' AND inventory_id IN(1,2) ORDER BY customer_ id;
+```
+
+- Here’s an example where MySQL could theoretically use an index to order a join, but doesn’t because the optimizer places the film_actor table second in the join (the next chapter shows ways to change the join order):
+
+```sql
+SELECT actor_id, title FROM sakila.film_actor INNER JOIN sakila.film USING(film_id) ORDER BY actor_id
+```
+
+### Redundant and Duplicate Indexes
+
+Sometimes you can create duplicate indexes without knowing it. For example, look at the following code:
+
+```sql
+CREATE TABLE test (
+ID INT NOT NULL PRIMARY KEY, A INT NOT NULL,
+B INT NOT NULL,
+UNIQUE(ID),
+INDEX(ID)
+) ENGINE=InnoDB;
+```
+
+An inexperienced user might think this identifies the column’s role as a primary key, adds a UNIQUE constraint, and adds an index for queries to use. In fact, MySQL imple- ments UNIQUE constraints and PRIMARY KEY constraints with indexes, so this actually creates three indexes on the same column! There is typically no reason to do this, unless you want to have different types of indexes on the same column to satisfy different kinds of queries.
+
+Redundant indexes are a bit different from duplicated indexes. If there is an index on (A, B), another index on (A)would be redundant because it is a prefix of the first index. That is, the index on (A, B) can also be used as an index on (A) alone. (This type of redundancy applies only to B-Tree indexes.) However, an index on (B, A) would not be redundant, and neither would an index on (B), because B is not a leftmost prefix of (A, B). Furthermore, indexes of different types (such as hash or full-text indexes) are not redundant to B-Tree indexes, no matter what columns they cover.
+
+Redundant indexes usually appear when people add indexes to a table. For example, someone might add an index on (A, B) instead of extending an existing index on (A) to cover (A, B). Another way this could happen is by changing the index to cover (A, ID). The ID column is the primary key, so it’s already included if you’re using InnoDB.
+
+In most cases you don’t want redundant indexes, and to avoid them you should extend existing indexes rather than add new ones. Still, there are times when you’ll need re- dundant indexes for performance reasons. Extending an existing index might make it much larger and reduce performance for some queries.
+
+For example, if you have an index on an integer column and you extend it with a long VARCHAR column, it might become significantly slower. This is especially true if your queries use the index as a covering index, or if it’s a MyISAM table and you perform a lot of range scans on it (because of MyISAM’s prefix compression).
+
+Consider the userinfo table, which we described previously in “Inserting rows in pri- mary key order with InnoDB” on page 173. This table contains 1,000,000 rows, and for each state_id there are about 20,000 records. There is an index on state_id, which is useful for the following query. We refer to this query as Q1:
+
+```
+mysql> SELECT count(*) FROM userinfo WHERE state_id=5;
+```
+
+A simple benchmark shows an execution rate of almost 115 queries per second (QPS) for this query. We also have a related query that retrieves several columns instead of just counting rows. This is Q2:
+
+```
+mysql> SELECT state_id, city, address FROM userinfo WHERE state_id=5;
+```
+
+For this query, the result is less than 10 QPS.15 The simple solution to improve its performance is to extend the index to (state_id, city, address), so the index will cover the query:
+
+```
+mysql> ALTER TABLE userinfo DROP KEY state_id,
+-> ADD KEY state_id_2 (state_id, city, address);
+```
+
+After extending the index, Q2 runs faster, but Q1 runs more slowly. If we really care about making both queries fast, we should leave both indexes, even though the single- column index is redundant. Table 5-3 shows detailed results for both queries and in- dexing strategies, with MyISAM and InnoDB storage engines. Note that InnoDB’s performance doesn’t degrade as much for Q1 with only the state_id_2 index, because InnoDB doesn’t use key compression.

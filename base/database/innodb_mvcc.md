@@ -16,9 +16,9 @@ InnoDB implements MVCC by storing with each row two additional, hidden values th
   
 - **INSERT**
   InnoDB records the current system version number with the new row.
-- ** DELETE **
+- **DELETE**
   InnoDB records the current system version number as the row’s deletion ID.
-- ** UPDATE **
+- **UPDATE**
   InnoDB writes a new copy of the row, using the system version number for the new row’s version. It also writes the system version number as the old row’s deletion version
  
 The result of all this extra record keeping is that most read queries never acquire locks. They simply read data as fast as they can, making sure to select only rows that meet the criteria. The drawbacks are that the storage engine has to store more data with each row, do more work when examining rows, and handle some additional housekeeping operations.
