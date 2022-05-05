@@ -64,7 +64,8 @@ Because the indexes themselves store only short hash values, hash indexes are ve
 - Some index maintenance operations can be slow if there are many hash collisions. For example, if you create a hash index on a column with a very low selectivity (many hash collisions) and then delete a row from the table, finding the pointer from the index to that row might be expensive. The storage engine will have to examine each row in that hash key’s linked list to find and remove the reference to the one row you deleted.
 
 #### Spatial (R-Tree) indexes
-MyISAM supports spatial indexes, which you can use with partial types such as GEOME TRY. Unlike B-Tree indexes, spatial indexes don’t require your WHERE clauses to operate on a leftmost prefix of the index. They index the data by all dimensions at the same time. As a result, lookups can use any combination of dimensions efficiently.
+
+MyISAM supports spatial indexes, which you can use with partial types such as GEOMETRY. Unlike B-Tree indexes, spatial indexes don’t require your WHERE clauses to operate on a leftmost prefix of the index. They index the data by all dimensions at the same time. As a result, lookups can use any combination of dimensions efficiently.
 
 #### Full-text indexes
 

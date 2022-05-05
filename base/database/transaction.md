@@ -12,6 +12,14 @@
 
 - **Isolation** − In a database system where more than one transaction are being executed simultaneously and in parallel, the property of isolation states that all the transactions will be carried out and executed as if it is the only transaction in the system. No transaction will affect the existence of any other transaction.
 
+### ACID Example
+
+Let's take an example of money transfer from account A to account B:
+- Atomic: the balance of A must be decreased and B must be increased, or the balance of A and B remain as before
+- Consistency: the balance of A mustn’t be zero after the transaction finishes
+- Isolation: the result of two concurrent transactions must be the same as that of two sequential transactions
+- Durable: when the transaction finishes, the balance of A and B must be persisted no matter what
+
 ### State of Transactions
 
 ![State of Transactions](images/transaction_states.png)
@@ -27,3 +35,13 @@
   - Kill the transaction
 
 - **Committed**: If a transaction executes all its operations successfully, it is said to be committed. All its effects are now permanently established on the database system.
+
+## BASE properties
+
+Most NoSQL stores lack true ACID transactions and favor eventual consistency.
+
+BASE is often used to describe the properties of NoSQL databases. In comparison with the CAP Theorem, BASE chooses availability over consistency.
+
+- Basically available - the system guarantees availability.
+- Soft state - the state of the system may change over time, even without input.
+- Eventual consistency - the system will become consistent over a period of time, given that the system doesn't receive input during that period.
