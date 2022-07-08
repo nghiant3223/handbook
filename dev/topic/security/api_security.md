@@ -73,6 +73,19 @@
   - When the query is prepared, the database will parse, compile and optimise its plan to execute the query.
   - By using prepared statements, you avoid repeating the analysis/compilation/optimisation cycle. In short, prepared queries use fewer resources and run faster.
   - If your application uses prepared statements exclusively, you can be sure that no SQL injection is possible (however, if you build other parts of the statement based on user input, you are still taking a risk).
+### Lack of data encryption and Man In The Middle attacks
+#### Man In The Middle attacks
+- A malicious individual inserts himself into a communication or data transfer between a client and a server, a server and a server or a client and a client.
+- To intercept sensitive data or to manipulate the communication in order to introduce malware.
+- This type of attack is possible if and only if the communications are not encrypted.
+#### Encrypting data with TLS to counter Man In The Middle attacks
+- Indeed, TLS (successor to SSL) is an encryption protocol that ensures secure communications over a computer network.
+- connections will have one or more of following properties:
+  - Private (i.e. secure) because the data transmitted is encrypted.
+  - The encryption keys are uniquely generated for each connection and are based on a shared secret negotiated at the beginning of the session.
+  - Guarantees integrity because each transmitted message includes a signature verification of the integrity of the message, thus avoiding any undetected loss or alteration of the data during transmission.
+- Help reduce or even eliminate the risks of Man In The Middle attacks.
+- Recommend implementing the HSTS (http Strict Transport Security) header on your servers in order to force a browser to use HTTPS secure connections, without this setting, you run the risk of users accessing your domain without the HTTPS protocol, which can lead to a breach in communications.
 ## Ref
 - https://www.vaadata.com/blog/how-to-strengthen-the-security-of-your-apis-to-counter-the-most-common-attacks/
 - https://www.stackhawk.com/blog/golang-command-injection-examples-and-prevention/
