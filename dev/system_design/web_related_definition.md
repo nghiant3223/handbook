@@ -10,10 +10,12 @@
 - To process a request, a Web server may respond with a static HTML page or image, send a redirect, or delegate the dynamic response generation to some other program such as CGI scripts, JSPs (JavaServer Pages), servlets, ASPs (Active Server Pages), server-side JavaScripts, or some other server-side technology.
 - Whatever their purpose, such server-side programs generate a response, most often in HTML, for viewing in a Web browser.
 - The Web server doesn't provide any functionality beyond simply providing an environment in which the server-side program can execute and pass back the generated responses.
+- Example: Apache Web Server, Nginx, Tomcat, ...
 ## Web Hosting
 - A company offering a web hosting service
 - They are primarily responsible for hosting the website on a server.
-- A web host can sell or rent the server machine and ensure that it runs smoothly and efficiently. 
+- A web host can sell or rent the server machine and ensure that it runs smoothly and efficiently.
+- Example: Hostinger, GoDaddy, Bluehost, ...
 ## Web Host vs Web Server
 - A Web server is a computer that runs your website whereas Web hosts make those websites accessible to the user.
 - The web server provides the services to other devices on the internet. On the contrary, web hosts allow organizations and businesses to run their websites online.
@@ -22,7 +24,8 @@
 ## The application server
 - An application server exposes business logic to client applications through various protocols, possibly including HTTP
 - Such application server clients can include GUIs (graphical user interface) running on a PC, a Web server, or even other application servers.
-- In most cases, the server exposes this business logic through a component API,
+- In most cases, the server exposes this business logic through a component API
+- Example: JBoss, Weblogic, ...
 ## Example
 - An online store that provides real-time pricing and availability information
 - The site will provide a form with which you can choose a product
@@ -41,6 +44,7 @@
 - A Web service is a way for two machines to communicate with each other over a network.
 - An application that is run by a web server and that results in a series of URLs that will return their data in a format that is intended to be parsed by a 'generic' computer program instead of by a browser.
 - As a result web services can use any data format they want (as long as both sides agree), but typically something like XML (specifically SOAP or so) or JSON is used.
+- Web services are a simple way of how applications can use the Web. They are a way to use Web technologies for providing an Application Programming Interface (API).
 ## Web APIs
 - API stands for Application Programming Interface. 
 - It is a collection of communication conventions and subroutines used by various programs to communicate between them.
@@ -50,3 +54,5 @@
 - https://www.infoworld.com/article/2077354/app-server-web-server-what-s-the-difference.html#:~:text=Q%3A%20What%20is%20the%20difference,through%20any%20number%20of%20protocols.
 - https://www.quora.com/What-is-the-difference-among-web-service-web-server-web-host-and-web-client
 - https://www.geeksforgeeks.org/differences-between-web-services-and-web-api/#:~:text=Web%20services%20are%20a%20type,and%20XML%2DRPC%20for%20communication.
+- https://www.geeksforgeeks.org/difference-between-program-and-application/#:~:text=All%20Apps%20or%20applications%20are,to%20get%20installed%20on%20computer.
+- https://www.youtube.com/watch?v=e3bz4dxoUII
