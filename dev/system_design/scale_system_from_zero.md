@@ -66,3 +66,26 @@
 - Bottleneck:
   - If the master server goes down for whatever reason, the data will still be available via the slave, but new writes won’t be possible.
   - We need an additional algorithm to promote a slave to a master.
+- Some solutions to implement only one server can handle update requests:
+  - Synchronous solutions: the data modifying transaction is not committed until accepted by all servers (distributed transaction), so no data lost on failover.
+  - Asynchronous solutions: commit -> delay -> propagation to other servers in the cluster, so some data updates may be lost on failover -> faster than synchronous
+#### Master-master replication
+- Each database server can act as the master at the same time as other servers are being treated as masters. At some point in time, all of the masters sync up to make sure that they all have correct and up-to-date data.
+![img.png](img/master_master.png)
+- Advantages:
+  - If one master fails, the other database servers can operate normally
+  - Masters can be located in several physical sites and can be distributed across the network.
+#### Federation
+- Federation (or functional partitioning) splits up databases by function
+- For example, instead of a single, monolithic database, you could have three databases: forums, users, and products, resulting in less read and write traffic to each database and therefore less replication lag.
+- Smaller databases result in more data that can fit in memory, which in turn results in more cache hits due to improved cache locality. 
+- With no single central master serializing writes you can write in parallel, increasing throughput.
+#### Sharding
+- Sharding (also known as data partitioning), is a technique to break up a big database into many smaller parts such that each database can only manage a subset of the data.
+- It helps to improve the manageability, performance, availability, and load balancing of a system.
+##### Horizontal partitioning
+- Put different rows into different tables
+##### Vertical partitioning
+- Divide our data to store tables related to a specific feature in their own server.
+- For example, if we are building an Instagram-like system — where we need to store data related to users, photos they upload, and people they follow — we can decide to place user profile information on one DB server, friend lists on another, and photos on a third server.
+##### Directory based partitioning
