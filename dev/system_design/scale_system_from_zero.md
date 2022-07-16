@@ -89,3 +89,40 @@
 - Divide our data to store tables related to a specific feature in their own server.
 - For example, if we are building an Instagram-like system — where we need to store data related to users, photos they upload, and people they follow — we can decide to place user profile information on one DB server, friend lists on another, and photos on a third server.
 ##### Directory based partitioning
+- A loosely coupled approach to this problem is to create a lookup service that knows your current partitioning schema and keeps a map of each entity and which database shard it is stored on.
+##### Limit of sharding
+- There are some common problems with Sharding techniques as follows:
+  - Database joins become more expensive and not feasible in certain cases
+  - Sharding can compromise database referential integrity
+  - Database schema changes can become extremely expensive
+  - The data distribution is not uniform and there is a lot of load on a shard
+#### Denormalization
+- Denormalization attempts to improve read performance at the expense of some write performance
+- Redundant copies of the data are written in multiple tables to avoid expensive joins -> need for complex join in sharding
+- Some RDBMS such as PostgreSQL and Oracle support materialized views which handle the work of storing redundant information and keeping redundant copies consistent
+##### Blob databases
+- Blobs are more like a key/value store for files and are accessed through APIs like Amazon S3, Google Cloud Storage, ...
+#### How to choose which database to use?
+![img.png](img/choose_db.png)
+### Scaling the web tier horizontally
+- We must choose stateless architecture whenever possible because the implementation of state limits scalability, decreases availability, and increase the cost.
+### Caching
+- Caching will enable you to make vastly better use of the resources you already have, so that the data may be served faster during subsequent requests.
+![img.png](img/caching.png)
+- By adding caches to our servers, we can avoid reading the webpage or data directly from the server, thus reducing both the response time and the load on our server.
+- This helps in making our application more scalable.
+- Caching can be applied at many layers such as the database layer, web server layer, and network layer.
+### Content Delivery Network (CDN)
+- The CDN servers keep cached copies of the content (such as images, web pages, etc.) and serve them from the nearest location.
+- The use of CDN improves page load time for users as the data is retrieved at a location closest to it. 
+- This also helps in increasing the availability of content, since it is stored at multiple locations.
+![img.png](img/cdn.png)
+- The CDN servers make requests to our Web server to validate the content being cached and update them if required.
+- The content being cached is usually static such as HTML pages, images, JavaScript files, CSS files, etc.
+### Go Global
+- When your app goes global, you will own and operating data centers around the world to keep your products running 24 hours a day, 7 days a week
+- Incoming requests are routed to the “best” data center based on GeoDNS
+- GeoDNS is a DNS service that allows domain names to be resolved to IP addresses based on the location of the customer
+- A client connecting from Asia may get a different IP address than the client connecting from Europe.
+## Putting it all together
+- Applying all these techniques iteratively, we can easily scale the system to more than 100 million users such as stateless architecture, apply load balancer, use cache data as much as you can, support multiple data centers, host static assets on CDN, scale your data tier by sharding., etc.
