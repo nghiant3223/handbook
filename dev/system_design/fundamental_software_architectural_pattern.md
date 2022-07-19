@@ -61,3 +61,18 @@
 - This pattern is used to structure distributed systems with decoupled components
 - It is, at a certain level, an extension of the Client-Server approach for more complex scenarios
 - The broker is the message-routing component of your system. It passes messages from client to server and from server to client
+- These messages are requests for services and replies to those requests, as well as messages about exceptions that have occurred.
+- Servers publish their capabilities (services and characteristics) to a broker
+- Clients request a service from the broker, and the broker then redirects the client to a suitable service from its registry
+- Good examples of Message broker softwares are Apache ActiveMQ, Apache Kafka, RabbitMQ
+![img.png](img/broker.png)
+- This pattern is recommended
+  - If the relation client-server is not fixed because there are many suitable servers or the availability of the servers changes over time
+  - If the choice of server depends on some criterion that is complex enough to be delegated to a separate component
+- Setting up or building the broker piece is a challenging task which is usually taken over one of the providers mentioned above
+## Architecture mismatch
+- This situation can happen at the conceptual level when an architectural scheme is not aligned with the most important attributes of the desired system or when the selected technology is not the right one
+- For example, if there are indications that the architecture is associated with a pub-sub model, using a relational database as the main mechanism to exchange messages will notoriously affect the final result
+- Studying these patterns, and fundamentally taking the time required to define an architecture properly, can save us from many problems, so we should not underestimate this activity at the beginning of each new project that we have to face
+## Ref
+- https://medium.com/@liams_o/fundamental-software-architectural-patterns-663440c5f9a5
