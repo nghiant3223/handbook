@@ -46,3 +46,4 @@
 ## Ref
 - https://www.youtube.com/watch?v=i9x0UO8MY0g
 - https://www.cloudflare.com/learning/cloud/what-is-the-cloud/
+- https://www.cloudflare.com/learning/cdn/glossary/data-center/
