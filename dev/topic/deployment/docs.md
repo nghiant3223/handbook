@@ -1,2 +1,0 @@
-- [How heroku works?](https://devcenter.heroku.com/articles/how-heroku-works)
-- [Architecting Applications for Heroku](https://devcenter.heroku.com/articles/architecting-apps)
