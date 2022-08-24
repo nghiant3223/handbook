@@ -1,0 +1,1 @@
+- [Best Practices for GraphQL Security](https://crashtest-security.com/graphql-security-vulnerabilities/)
