@@ -8,3 +8,4 @@
 - [Basic: Make a website](https://www.youtube.com/watch?v=QhFxnuQlbYI&list=PLEKndr7_Yo6lW1E87nu3TIRvlg5gcbKht&index=2)
 - [Cache overview](https://www.youtube.com/watch?v=noZzKwWVHc0&t=26s)
 - [backend overview](https://www.youtube.com/watch?v=XKuCkc-F-nQ)
+- [Basic: Oauth2](https://www.youtube.com/watch?v=M_d5OmlOOQU)
