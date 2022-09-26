@@ -48,6 +48,30 @@
 ## Web APIs
 - API stands for Application Programming Interface. 
 - It is a collection of communication conventions and subroutines used by various programs to communicate between them.
+## Upstream vs Downstream
+What does up/downstream actually mean?
+In web services, upstream and downstream are actually defined by the HTTP specification as follows:
+
+> Upstream and downstream describe the flow of a message: all messages flow from upstream to downstream.
+
+In other words, in any HTTP interaction, the requesting service is downstream. The service responding is upstream.
+
+This isn't just a random definition thrown into the opening portion of the specification and then ignored thereafter, either. You will find this specific usage of up/downstream throughout the specification. Consider the definition of a 504 Gateway Timeout response for example:
+
+> The server, while acting as a gateway or proxy, did not receive a timely response from an upstream server it needed to access in order to complete the request.
+
+You will also find the same usage in documentation for things like nginx.
+
+To visualize this, consider a series of service calls initiated by some external client, as follows:
+```
+client -> service A -> service B -> service C
+```
+The above is the request flow, but the response flow is:
+```
+client <- service A <- service B <- service C
+```
+The response flow is the flow that is the basis for "upstream" and "downstream" in web services.
+
 # Ref
 - https://www.youtube.com/watch?v=WDY8j-nSwi4
 - https://go4hosting.com/howto/web-hosting/how-to-differentiate-between-a-web-server-and-web-host/#:~:text=Web%20server%20vs.&text=you%20server%20vs.-,hosting%3A,to%20run%20their%20websites%20online.
@@ -56,3 +80,4 @@
 - https://www.geeksforgeeks.org/differences-between-web-services-and-web-api/#:~:text=Web%20services%20are%20a%20type,and%20XML%2DRPC%20for%20communication.
 - https://www.geeksforgeeks.org/difference-between-program-and-application/#:~:text=All%20Apps%20or%20applications%20are,to%20get%20installed%20on%20computer.
 - https://www.youtube.com/watch?v=e3bz4dxoUII
+- https://dev.to/scottshipp/web-services-101-the-client-is-downstream-the-service-is-upstream-1gd1
