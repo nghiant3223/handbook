@@ -121,6 +121,10 @@ Disadvantages:
 
 Because the Go GC is a mark-sweep GC, it broadly operates in two phases: the mark phase, and the sweep phase. It's not possible to release memory back to be allocated until all memory has been traced, because there may still be an un-scanned pointer keeping an object alive. As a result, the act of sweeping must be entirely separated from the act of marking, making marking cannot run concurrently with sweeping. There is a fact that the GC may also not be active at all, when there's no GC-related work to do. A **GC cycle** contains three phases: sweeping, turning off, then marking.
 
+### Stop the World
+
+When garbage is collected, the garbage collector must obtain exclusive access to the heap, which causes an application to pause while the cleanup is done. This pause (happens in sweeping phase) is often referred to as a stop-the-world (STW) pause because an application must halt until the process completes.
+
 ### GOGC 
 
 It works by determining the target heap size after each GC cycle, a target value for the total heap size in the next cycle. The GC's goal is to finish a collection cycle before the total heap size exceeds the target heap size. Total heap size is defined as the live heap size at the end of the previous cycle, plus any new heap memory allocated by the application since the previous cycle. Meanwhile, target heap memory is defined as:
@@ -139,3 +143,6 @@ While the precise formula is useful for making estimates, it's best to think of 
 - [Mark and Sweep algorithm](https://www.geeksforgeeks.org/mark-and-sweep-garbage-collection-algorithm/)
 - [An overview of Go garbage collector](https://medium.com/safetycultureengineering/an-overview-of-memory-management-in-go-9a72ec7c76a8)
 - [When does Go garbage collector occurs?](https://www.reddit.com/r/golang/comments/7tlw83/when_does_garbage_collection_occurs/)
+- [Garbage collection](https://www.ibm.com/docs/en/sdk-java-technology/8?topic=management-garbage-collection-gc)
+- [Go's garbage collector](https://agrim123.github.io/posts/go-garbage-collector.html)
+
