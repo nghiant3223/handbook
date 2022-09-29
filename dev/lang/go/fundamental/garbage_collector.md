@@ -137,6 +137,8 @@ The heap target controls GC frequency: the bigger the target, the longer the GC 
 
 While the precise formula is useful for making estimates, it's best to think of GOGC in terms of its fundamental purpose: a parameter that picks a point in the GC CPU and memory trade-off. The key takeaway is that doubling GOGC will double heap memory overheads and roughly halve GC CPU cost, and vice versa. (To see a full explanation as to why, see [this](https://tip.golang.org/doc/gc-guide#Additional_notes_on_GOGC).)
 
+This option offers a direct tradeoff between CPU and memory: it directly dictates the amount of memory overhead available to the garbage collector. Less memory overhead means more frequent garbage collection cycles, and more CPU spent on GC. More memory overhead means less frequent cycles and more CPU for the application.
+
 ## References
 
 - [GC Guide](https://tip.golang.org/doc/gc-guide)
