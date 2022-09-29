@@ -147,4 +147,4 @@ This option offers a direct tradeoff between CPU and memory: it directly dictate
 - [When does Go garbage collector occurs?](https://www.reddit.com/r/golang/comments/7tlw83/when_does_garbage_collection_occurs/)
 - [Garbage collection](https://www.ibm.com/docs/en/sdk-java-technology/8?topic=management-garbage-collection-gc)
 - [Go's garbage collector](https://agrim123.github.io/posts/go-garbage-collector.html)
-
+- [GOMEMLIMIT proposal](https://github.com/golang/proposal/blob/150687b78c1d11cdb41572e75484c84280d5a963/design/48409/soft-memory-limit.src.md))
