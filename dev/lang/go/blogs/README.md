@@ -12,3 +12,4 @@
 - <https://peter.bourgon.org/blog/>
 - <https://hyeomans.com/>
 - <https://dave.cheney.net/>
+- <https://research.swtch.com/>
