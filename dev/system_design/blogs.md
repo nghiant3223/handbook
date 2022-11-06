@@ -9,3 +9,4 @@
 - [How to design a system to scale to your first 100 million users
 ](https://levelup.gitconnected.com/how-to-design-a-system-to-scale-to-your-first-100-million-users-4450a2f9703d)
 - [Architecture, Design & Analysis for multi-region Enterprise Apps](https://medium.com/@prasgema/architecture-design-analysis-for-multi-region-enterprise-apps-6f17b11bda2c)
+- [Service tier](https://support.atlassian.com/jira-service-management-cloud/docs/what-are-service-tiers/)
