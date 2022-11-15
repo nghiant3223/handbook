@@ -11,3 +11,5 @@
 - [Architecture, Design & Analysis for multi-region Enterprise Apps](https://medium.com/@prasgema/architecture-design-analysis-for-multi-region-enterprise-apps-6f17b11bda2c)
 - [Service tier](https://support.atlassian.com/jira-service-management-cloud/docs/what-are-service-tiers/)
 - [How Service Tiers Can Help to Avoid Microservices Disasters](https://thenewstack.io/how-service-tiers-can-help-to-avoid-microservices-disasters/)
+- [Introducing sign in with Apple
+](youtube.com/watch?v=tzTz-pb_TPk)
