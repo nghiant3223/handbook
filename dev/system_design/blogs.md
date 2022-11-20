@@ -13,3 +13,5 @@
 - [How Service Tiers Can Help to Avoid Microservices Disasters](https://thenewstack.io/how-service-tiers-can-help-to-avoid-microservices-disasters/)
 - [Introducing sign in with Apple
 ](youtube.com/watch?v=tzTz-pb_TPk)
+- [5 User Authentication Methods that Can Prevent the Next Breach
+](https://www.idrnd.ai/5-authentication-methods-that-can-prevent-the-next-breach/)
