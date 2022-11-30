@@ -15,3 +15,6 @@
 ](youtube.com/watch?v=tzTz-pb_TPk)
 - [5 User Authentication Methods that Can Prevent the Next Breach
 ](https://www.idrnd.ai/5-authentication-methods-that-can-prevent-the-next-breach/)
+- [API Management: What Is It & Why Does It Matter?](https://blog.hubspot.com/website/api-management#:~:text=API%20management%20ensures%20compliance%20with,their%20applications%20and%20sensitive%20data.)
+- [AWS API management](https://aws.amazon.com/vi/api-gateway/api-management/)
+- [API keys vs JWT authorization – Which is best?](https://www.algolia.com/blog/engineering/api-keys-vs-json-web-tokens/)
