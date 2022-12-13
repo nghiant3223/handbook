@@ -18,3 +18,5 @@
 - [API Management: What Is It & Why Does It Matter?](https://blog.hubspot.com/website/api-management#:~:text=API%20management%20ensures%20compliance%20with,their%20applications%20and%20sensitive%20data.)
 - [AWS API management](https://aws.amazon.com/vi/api-gateway/api-management/)
 - [API keys vs JWT authorization – Which is best?](https://www.algolia.com/blog/engineering/api-keys-vs-json-web-tokens/)
+- [How to Prevent a BREACH Attack
+](https://crashtest-security.com/prevent-breach-attacks/)
