@@ -20,3 +20,4 @@
 - [API keys vs JWT authorization – Which is best?](https://www.algolia.com/blog/engineering/api-keys-vs-json-web-tokens/)
 - [How to Prevent a BREACH Attack
 ](https://crashtest-security.com/prevent-breach-attacks/)
+- [Slowly Changing Dimensions](https://www.oracle.com/webfolder/technetwork/tutorials/obe/db/10g/r2/owb/owb10gr2_gs/owb/lesson3/slowlychangingdimensions.htm#:~:text=What%20is%20a%20Slowly%20Changing,the%20history%20of%20dimension%20records.)
