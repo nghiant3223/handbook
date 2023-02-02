@@ -23,3 +23,4 @@
 - [Slowly Changing Dimensions](https://www.oracle.com/webfolder/technetwork/tutorials/obe/db/10g/r2/owb/owb10gr2_gs/owb/lesson3/slowlychangingdimensions.htm#:~:text=What%20is%20a%20Slowly%20Changing,the%20history%20of%20dimension%20records.)
 - [Implementing Slowly Changing Dimensions (SCDs) in Data Warehouses](https://www.sqlshack.com/implementing-slowly-changing-dimensions-scds-in-data-warehouses/)
 - [Denormalization in Databases](https://www.geeksforgeeks.org/denormalization-in-databases/)
+- [REST Resource Naming Guide](https://restfulapi.net/resource-naming/)
