@@ -24,3 +24,4 @@
 - [Implementing Slowly Changing Dimensions (SCDs) in Data Warehouses](https://www.sqlshack.com/implementing-slowly-changing-dimensions-scds-in-data-warehouses/)
 - [Denormalization in Databases](https://www.geeksforgeeks.org/denormalization-in-databases/)
 - [REST Resource Naming Guide](https://restfulapi.net/resource-naming/)
+- [Long vs. Wide Data: What’s the Difference?](https://www.statology.org/long-vs-wide-data/#:~:text=A%20wide%20format%20contains%20values,repeat%20in%20the%20first%20column.&text=Notice%20that%20in%20the%20wide,the%20first%20column%20is%20unique.)
