@@ -1,1 +1,2 @@
 - [Best Practices for GraphQL Security](https://crashtest-security.com/graphql-security-vulnerabilities/)
+- [On API Keys Best Practices](https://blog.mergify.com/api-keys-best-practice/)
