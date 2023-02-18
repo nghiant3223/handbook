@@ -1,0 +1,2 @@
+- [Enforce SSL connections in AWS RDS SQL Server
+](https://www.sqlshack.com/enforce-ssl-connections-in-aws-rds-sql-server/#:~:text=In%20this%20approach%2C%20AWS%20uses,does%20not%20use%20any%20encryption.)

@@ -4,3 +4,5 @@
 - [Coin Change Problem (Dynamic Programming)](https://www.youtube.com/watch?v=jaNZ83Q3QGc)
 - [Coin Change - Dynamic Programming Bottom Up - Leetcode 322](https://www.youtube.com/watch?v=H9bfqozjoqs)
 - [Top 5 Dynamic Programming Patterns for Coding Interviews - For Beginners](https://www.youtube.com/watch?v=mBNrRy2_hVs)
+- [How I mastered Data Structures and Algorithms
+](https://www.youtube.com/watch?v=s2mYsPWzLjg)
