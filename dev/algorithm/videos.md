@@ -6,3 +6,5 @@
 - [Top 5 Dynamic Programming Patterns for Coding Interviews - For Beginners](https://www.youtube.com/watch?v=mBNrRy2_hVs)
 - [How I mastered Data Structures and Algorithms
 ](https://www.youtube.com/watch?v=s2mYsPWzLjg)
+- [Top 10 algorithms in Interview Questions
+](https://www.geeksforgeeks.org/top-10-algorithms-in-interview-questions/)
