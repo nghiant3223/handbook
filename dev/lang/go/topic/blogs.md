@@ -12,6 +12,8 @@
 ## Memory
 
 - [Language Mechanics On Escape Analysis](https://www.ardanlabs.com/blog/2017/05/language-mechanics-on-escape-analysis.html)
+- [Understanding Garbage Collection in Go
+](https://www.developer.com/languages/garbage-collection-go/)
 
 ## Graceful Shutdown
 
