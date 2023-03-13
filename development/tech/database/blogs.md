@@ -1,0 +1,1 @@
+- [What is the difference between DATETIME and TIMESTAMP data type in MySQL?](https://devdojo.com/bobbyiliev/what-is-the-difference-between-datetime-and-timestamp-data-type-in-mysql)
