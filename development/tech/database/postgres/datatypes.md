@@ -198,3 +198,42 @@ TIMESTAMP '2004-10-19 10:23:54+02'
 - To see the time in another time zone, either `change timezone` or use the `AT TIME ZONE` construct.
 - Conversions between `timestamp without time zone` and `timestamp with time zone` normally assume that the `timestamp without time zone` value should be taken or given as `timezone local time`. A different time zone can be specified for the conversion using `AT TIME ZONE`.
 ### Special Values
+- All of these values need to be `enclosed in single quotes` when used as constants in SQL commands.
+
+| Input String | Valid Types           | Description                                    |
+|--------------|-----------------------|------------------------------------------------|
+| epoch        | date, timestamp       | 1970-01-01 00:00:00+00 (Unix system time zero) |
+| infinity     | date, timestamp       | later than all other time stamps               |
+| -infinity    | date, timestamp       | earlier than all other time stamps             |
+| now          | date, time, timestamp | current transaction's start time               |
+| today        | date, timestamp       | midnight (00:00) today                         |
+| tomorrow     | date, timestamp       | midnight (00:00) tomorrow                      |
+| yesterday    | date, timestamp       | midnight (00:00) yesterday                     |
+| allballs     | time                  | 00:00:00.00 UTC                                |
+
+### Date/Time Output
+- `ISO 8601`, `SQL (Ingres)`, `traditional POSTGRES (Unix date format)`, or `German`
+- The default is the `ISO` format.
+
+| Style Specification | Description            | Example                      |
+|---------------------|------------------------|------------------------------|
+| ISO                 | ISO 8601, SQL standard | 1997-12-17 07:37:16-08       |
+| SQL                 | traditional style      | 12/17/1997 07:37:16.00 PST   |
+| Postgres            | original style         | Wed Dec 17 07:37:16 1997 PST |
+| German              | regional style         | 17.12.1997 07:37:16.00 PST   |
+- The date/time style can be selected by the user using the `SET datestyle` command, the `DateStyle` parameter in the `postgresql.conf` configuration file, or the `PGDATESTYLE` environment variable on the server or client.
+- The formatting function `to_char` is also available as a more flexible way to format date/time output.
+### Time Zones
+- Recommend using date/time types that `contain both date and time` when using `time zones`.
+- PostgreSQL assumes your `local time zone` for any type `containing only date or time`.
+- PostgreSQL allows you to specify time zones in three different forms:
+    - A full time zone name, for example `America/New_York`.
+    - A time zone abbreviation, for example `PST`. 
+    - In addition to the timezone names and abbreviations, PostgreSQL will accept POSIX-style time zone specifications.
+- `2014-06-04 12:00 America/New_York` represents noon local time in `New York`, and is equivalent to `2014-06-04 12:00 EDT`.
+- In Moscow MSK has meant `UTC+3` in some years and `UTC+4` in others.
+- In all cases, timezone names and abbreviations are recognized `case-insensitively`.
+- Neither timezone names nor abbreviations are hard-wired into the server -> obtained from `configuration files` stored under `.../share/timezone/` and `.../share/timezonesets/` of the installation directory.
+- The `TimeZone` configuration parameter can be set in the file `postgresql.conf`.
+- The SQL command `SET TIME ZONE` sets the time zone for the session.
+### Interval Input
