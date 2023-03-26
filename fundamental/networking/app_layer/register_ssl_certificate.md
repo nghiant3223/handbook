@@ -52,3 +52,5 @@ Follow below steps to get SSL certificate
 - The process of installing an SSL certificate depends on the OS (operating system) of the web server on which your site is hosted.
 ## 8. Can I Get a Free SSL Certificate?
 - Most of the top hosting providers, including Bluehost, HostGator, and InMotion, provide you with a free SSL certificate as part of your hosting package.
+## Reference
+- [How to get ssl certificate](https://www.websitebuilderexpert.com/building-websites/how-to-get-an-ssl-certificate/)
