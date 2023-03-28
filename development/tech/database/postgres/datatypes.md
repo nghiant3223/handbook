@@ -237,3 +237,60 @@ TIMESTAMP '2004-10-19 10:23:54+02'
 - The `TimeZone` configuration parameter can be set in the file `postgresql.conf`.
 - The SQL command `SET TIME ZONE` sets the time zone for the session.
 ### Interval Input
+| Example                                            | Description                                                                     |
+|----------------------------------------------------|---------------------------------------------------------------------------------|
+| 1-2                                                | SQL standard format: 1 year 2 months                                            |
+| 3 4:05:06                                          | SQL standard format: 3 days 4 hours 5 minutes 6 seconds                         |
+| 1 year 2 months 3 days 4 hours 5 minutes 6 seconds | Traditional Postgres format: 1 year 2 months 3 days 4 hours 5 minutes 6 seconds |
+| P1Y2M3DT4H5M6S                                     | ISO 8601 “format with designators”: same meaning as above                       |
+| P0001-02-03T04:05:06                               | ISO 8601 “alternative format”: same meaning as above                            |
+### Interval Output
+
+| Style Specification | Year-Month Interval | Day-Time Interval              | Mixed Interval                                    |
+|---------------------|---------------------|--------------------------------|---------------------------------------------------|
+| sql_standard        | 1-2                 | 3 4:05:06                      | -1-2 +3 -4:05:06                                  |
+| postgres            | 1 year 2 mons       | 3 days 04:05:06                | -1 year -2 mons +3 days -04:05:06                 |
+| postgres_verbose    | @ 1 year 2 mons     | @ 3 days 4 hours 5 mins 6 secs | @ 1 year 2 mons -3 days 4 hours 5 mins 6 secs ago |
+| iso_8601            | P1Y2M               | P3DT4H5M6S                     | P-1Y-2M3DT-4H-5M-6S                               |
+## Boolean Type
+| Name    | Storage Size | Description            |
+|---------|--------------|------------------------|
+| boolean | 1 byte       | state of true or false |
+## Enumerated Types
+### Declaration
+- Created using the `CREATE TYPE` command
+```
+CREATE TYPE mood AS ENUM ('sad', 'ok', 'happy');
+```
+```
+CREATE TYPE mood AS ENUM ('sad', 'ok', 'happy');
+CREATE TABLE person (
+    name text,
+    current_mood mood
+);
+INSERT INTO person VALUES ('Moe', 'happy');
+SELECT * FROM person WHERE current_mood = 'happy';
+ name | current_mood
+------+--------------
+ Moe  | happy
+```
+### Ordering
+- The ordering of the values in an enum type is the order in which the values were listed when the type was created. 
+- All standard comparison operators and related aggregate functions are supported.
+### Type Safety
+- Separate and cannot be compared with other enumerated types.
+- If you really need to do something like that, you can either add explicit casts to your query:
+```
+SELECT person.name, holidays.num_weeks FROM person, holidays
+  WHERE person.current_mood::text = holidays.happiness::text;
+ name | num_weeks
+------+-----------
+ Moe  |         4
+```
+### Implementation Details
+- Case sensitive 
+- White space in the labels is significant too.
+- support for adding new values to an existing enum type, and for renaming values (see ALTER TYPE).
+- Existing values cannot be removed from an enum type, nor can the sort ordering of such values be changed, short of dropping and re-creating the enum type.
+- Occupies `four bytes` on disk.
+- The length of an enum value's textual label is limited by the `NAMEDATALEN` setting compiled into PostgreSQL; in standard builds this means `at most 63 bytes`.

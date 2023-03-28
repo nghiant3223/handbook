@@ -1,0 +1,2 @@
+- [Nhận diện server "pha ke" bằng SSL Pinning](https://viblo.asia/p/nhan-dien-server-pha-ke-bang-ssl-pinning-6J3ZgWJEZmB)
+-> lấy certìicate ở đâu để pin -> xin ở server, phải xác định dc app mình sẽ truy cập những site nào, từ đó xin certificate từ server của những site đấy 
