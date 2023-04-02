@@ -294,3 +294,31 @@ SELECT person.name, holidays.num_weeks FROM person, holidays
 - Existing values cannot be removed from an enum type, nor can the sort ordering of such values be changed, short of dropping and re-creating the enum type.
 - Occupies `four bytes` on disk.
 - The length of an enum value's textual label is limited by the `NAMEDATALEN` setting compiled into PostgreSQL; in standard builds this means `at most 63 bytes`.
+## Geometric Types
+| Name    | Storage Size | Description                      | Representation                      |
+|---------|--------------|----------------------------------|-------------------------------------|
+| point   | 16 bytes     | Point on a plane                 | (x,y)                               |
+| line    | 32 bytes     | Infinite line                    | {A,B,C}                             |
+| lseg    | 32 bytes     | Finite line segment              | ((x1,y1),(x2,y2))                   |
+| box     | 32 bytes     | Rectangular box                  | ((x1,y1),(x2,y2))                   |
+| path    | 16+16n bytes | Closed path (similar to polygon) | ((x1,y1),...)                       |
+| path    | 16+16n bytes | Open path                        | [(x1,y1),...]                       |
+| polygon | 40+16n bytes | Polygon (similar to closed path) | ((x1,y1),...)                       |
+| circle  | 24 bytes     | Circle                           | <(x,y),r> (center point and radius) |
+## Network Address Types
+| Name     | Storage Size  | Description                      |
+|----------|---------------|----------------------------------|
+| cidr     | 7 or 19 bytes | IPv4 and IPv6 networks           |
+| inet     | 7 or 19 bytes | IPv4 and IPv6 hosts and networks |
+| macaddr  | 6 bytes       | MAC addresses                    |
+| macaddr8 | 8 bytes       | MAC addresses (EUI-64 format)    |
+| path     | 16+16n bytes  | Closed path (similar to polygon) |
+## Bit String Types
+- Bit strings are strings of 1's and 0's.
+- `bit(n)` and `bit varying(n)`, where n is a positive integer.
+## UUID Type
+- Universally Unique Identifiers 
+- A sequence of lower-case hexadecimal digits, in several groups separated by hyphens, specifically a group of `8` digits followed by `three` groups of `4` digits followed by a group of `12` digits, for a total of `32` digits representing the `128` bits.
+```
+a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11
+```
