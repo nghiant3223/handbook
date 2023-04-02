@@ -8,3 +8,5 @@
 - [SOLID Go Design](https://dave.cheney.net/2016/08/20/solid-go-design)
 - [Solid principles in Python and Django
 ](https://www.designmycodes.com/examples/solid-principles-python-django.html)
+- [SOLID Principles with Python Examples
+](https://medium0.com/@vubon.roy/solid-principles-with-python-examples-10e1f3d91259)
