@@ -1,0 +1,2 @@
+- [ACID, MVCC, and how PostgreSQL handles concurrent queries
+](https://medium0.com/@igor.atakhanov/acid-mvcc-and-how-postgresql-handles-concurrent-queries-27fb48692db8)->refer summary in `tech/database/postgres`

@@ -322,3 +322,26 @@ SELECT person.name, holidays.num_weeks FROM person, holidays
 ```
 a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11
 ```
+## XML Type
+- Name: `xml`
+- Advantage over storing `XML` data in a `text` field:
+    - Checks the input values for well-formedness
+    - Support functions to perform type-safe operations on it
+- Requires the installation with configure `--with-libxml`.
+## JSON Types
+- Name: `json`
+- Advantage over storing `JSON` data in a `text` field:
+    - Enforcing that each stored value is valid according to the `JSON` rules.
+    - Assorted JSON-specific functions and operators available for data stored in these data types.
+## Arrays
+- Variable-length multidimensional arrays.
+- Arrays of any built-in or user-defined base type, `enum` type, `composite` type, `range` type, or domain can be created.
+### Declaration
+```
+CREATE TABLE sal_emp (
+    name            text,
+    pay_by_quarter  integer[],
+    schedule        text[][]
+);
+```
+- PostgreSQL does not enforce the size restriction in any case.
