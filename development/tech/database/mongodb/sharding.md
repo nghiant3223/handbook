@@ -38,23 +38,11 @@
 - Where possible, choose a shard key with `high cardinality`.
 - If you chose to shard on `continent`, the shard key would have a `cardinality` of `7`.
 - If your data model requires sharding on a key that has `low cardinality`, consider using an `indexed compound of fields` to `increase cardinality`.
-- A `shard key` with `high cardinality` does `not` `guarantee even distribution` of data across the sharded cluster. The 
-frequency
- of the shard key and the potential for 
-monotonically changing shard key values
- also contribute to the distribution of the data.
-
-Shard Key Frequency
-The frequency of the shard key represents how often a given shard key value occurs in the data. If the majority of documents contain only a subset of the possible shard key values, then the chunks storing the documents with those values can become a bottleneck within the cluster. Furthermore, as those chunks grow, they may become indivisible chunks as they cannot be split any further. This reduces the effectiveness of horizontal scaling within the cluster.
-
-The following image illustrates a sharded cluster using the field X as the shard key. If a subset of values for X occur with high frequency, the distribution of inserts may look similar to the following:
-
-Diagram of poor shard key distribution due to high frequency
-click to enlarge
-If your data model requires sharding on a key that has high frequency values, consider using a compound index using a unique or low frequency value.
-
-A shard key with low frequency does not, on its own, guarantee even distribution of data across the sharded cluster. The 
-cardinality
- of the shard key and the potential for 
-monotonically changing shard key values
- also contribute to the distribution of the data.
+- A `shard key` with `high cardinality` does `not` `guarantee even distribution` of data across the sharded cluster.
+### Shard Key Frequency
+- The `frequency` of the shard key represents `how often` a given `shard key value` occurs in the `data`. 
+- If the `majority` of documents contain only `a subset` of the `possible shard key values`, then the `chunks` storing the documents with those values can become a `bottleneck` within the `cluster`. This reduces the `effectiveness` of `horizontal scaling` within the cluster.
+- Consider using a `compound index` or `low` frequency value.
+- A shard key with `low frequency` does not, on its own, `guarantee even distribution` of data across the sharded cluster.
+### Hashed Sharding vs Ranged Sharding
+![Figure 2](https://www.yugabyte.com/wp-content/uploads/2020/01/123table@3x.png)
