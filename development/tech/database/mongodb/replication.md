@@ -12,9 +12,11 @@
 - `MongoDB` achieves `replication` by the use of `replica set`.
 - A `replica set`
     - `a group of mongod instances` that host the `same data set`.
-    - `one` node is `primary node` that `receives all write operations`.
-    - All other instances, such as `secondaries`, apply operations from the `primary` so that they have the `same data set`. 
     - Can have `only one primary node`.
+    - Applies `write` operations on the `primary` and then `records` the operations on the `primary`'s `oplog`. 
+    - `Secondary` members `replicate` this `log` and apply the operations to their `datasets` in an `asynchronous` process.
+    - The `oplog` is a special `capped collection` (will replace old records if reach max size) that keeps a rolling record of `all operations` that modify the data stored in your databases.
+    - `All members` of the replica set can accept `read` operations.
     - A group of generally `minimum 3 nodes` are required
     - At the time of `automatic failover` or `maintenance`, election establishes for `primary` and `a new primary` node is elected.
     - After the recovery of `failed node`, it again join the replica set and works as a `secondary node`.
@@ -32,3 +34,10 @@ mongod --port 27017 --dbpath "D:\set up\mongodb\data" --replSet rs0
 ```
 - You can add mongod instance to replica set `only` when you are `connected to primary node`. 
 - To check whether you are connected to primary or not, issue the command `db.isMaster()` in mongo client.
+## Replica Set Data Synchronization
+- `MongoDB` uses `two` forms of data `synchronization`:
+    - `Initial sync` to populate `new members` with the `full` data set, copies all the data from `one` member of the replica set to new member
+    - `Replication` to apply `ongoing changes` to the entire data set. `Secondary` members copy the `oplog` from their `sync from source` and apply these operations in an `asynchronous` process
+## Voting new primary
+- Have `voting` and `non-voting` secondary members (can vote or not)
+![](https://www.mongodb.com/docs/manual/images/replica-set-only-seven-voting-members.bakedsvg.svg)
