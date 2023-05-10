@@ -45,30 +45,19 @@ db.products.createIndex(
 ### Multikey Index
 - MongoDB uses `multikey indexes` to index the `content` stored in `arrays`. 
 - If you `index` a `field` that holds an `array` value, MongoDB creates `separate index entries` for every `element` of the array.
-- These multikey indexes allow queries to select documents that contain arrays by matching on element or elements of the arrays. MongoDB automatically determines whether to create a multikey index if the indexed field contains an array value; you do not need to explicitly specify the multikey type.
-
-Diagram of a multikey index on the ``addr.zip`` field. The ``addr`` field contains an array of address documents. The address documents contain the ``zip`` field.
-See Multikey Indexes and Multikey Index Bounds for more information on multikey indexes.
-
-Geospatial Index
-To support efficient queries of geospatial coordinate data, MongoDB provides two special indexes: 2d indexes that uses planar geometry when returning results and 2dsphere indexes that use spherical geometry to return results.
-
-This index is a sparse index. If you want to use a sparse index to create a compound index, first review the special considerations of using sparse compound indexes.
-
-See Geospatial Indexes for a high level introduction to geospatial indexes.
-
-Text Search Indexes
-For data hosted on MongoDB Atlas, you can support full-text search with Atlas Search indexes. To learn more, see 
-Create an Atlas Search Index.
-
-For self-managed (non-Atlas) deployments, MongoDB provides a text index type that supports searching for string content in a collection. To learn more about self-managed text indexes, see Text Indexes.
-
-This index is a sparse index. If you want to use a sparse index to create a compound index, first review the special considerations of using sparse compound indexes.
-
-Hashed Indexes
-To support hash based sharding, MongoDB provides a hashed index type, which indexes the hash of the value of a field. These indexes have a more random distribution of values along their range, but only support equality matches and cannot support range-based queries.
-
-Clustered Indexes
+- These `multikey indexes` allow queries to `select` documents that `contain arrays` by matching on `element` or `elements` of the `arrays`.
+- `MongoDB` `automatically` determines `whether` to `create` a `multikey index` if the `indexed field` contains `an array` value; you `do not need` to explicitly `specify` the `multikey type`.
+### Geospatial Index
+- To support `efficient queries` of `geospatial coordinate` data, MongoDB provides `two` special indexes: `2d indexes` that uses `planar geometry` and `2dsphere indexes` that use `spherical geometry` to return results.
+- This index is a `sparse index`.
+### Text Search Indexes
+- For `data` hosted on `MongoDB Atlas`, you can support `full-text search` with `Atlas Search indexes`
+- For `self-managed` deployments, `MongoDB` provides a `text index type` that supports `searching` for `string content` in a `collection`.
+- This index is a `sparse index`
+### Hashed Indexes
+- To support `hash based sharding`, MongoDB provides a `hashed index` type, which `indexes` the `hash of the value` of a `field`.
+- These indexes have a `more random distribution` of `values` along their range, but `only support equality matches` and `cannot support range-based` queries.
+### Clustered Indexes
 Starting in MongoDB 5.3, you can create a collection with a clustered index. Collections created with a clustered index are called clustered collections.
 
 See Clustered Collections.
