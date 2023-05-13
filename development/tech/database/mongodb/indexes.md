@@ -58,20 +58,22 @@ db.products.createIndex(
 - To support `hash based sharding`, MongoDB provides a `hashed index` type, which `indexes` the `hash of the value` of a `field`.
 - These indexes have a `more random distribution` of `values` along their range, but `only support equality matches` and `cannot support range-based` queries.
 ### Clustered Indexes
-Starting in MongoDB 5.3, you can create a collection with a clustered index. Collections created with a clustered index are called clustered collections.
+- Starting in `MongoDB 5.3`, you can create `a collection` with a `clustered index`. 
+- Collections created with a `clustered index` are called `clustered collections`.
+## Index Properties
+### Unique Indexes
+- The `unique` property for an index causes MongoDB to `reject duplicate values` for the `indexed field`. 
+### Partial Indexes
+- `Partial indexes` only index the `documents` in a collection that `meet` a specified `filter expression`.
+- By indexing a `subset` of the `documents` in a `collection`, partial indexes have `lower storage requirements` and `reduced performance costs` for index `creation` and `maintenance`.
+- Example
+```
+CREATE INDEX messages_todo
+          ON messages (receiver)
+       WHERE processed = 'N'
+```
 
-See Clustered Collections.
-
-Index Properties
-Unique Indexes
-The unique property for an index causes MongoDB to reject duplicate values for the indexed field. Other than the unique constraint, unique indexes are functionally interchangeable with other MongoDB indexes.
-
-Partial Indexes
-Partial indexes only index the documents in a collection that meet a specified filter expression. By indexing a subset of the documents in a collection, partial indexes have lower storage requirements and reduced performance costs for index creation and maintenance.
-
-Partial indexes offer a superset of the functionality of sparse indexes and should be preferred over sparse indexes.
-
-Sparse Indexes
+### Sparse Indexes
 The sparse property of an index ensures that the index only contain entries for documents that have the indexed field. The index skips documents that do not have the indexed field.
 
 You can combine the sparse index option with the unique index option to prevent inserting documents that have duplicate values for the indexed field(s) and skip indexing documents that lack the indexed field(s).
