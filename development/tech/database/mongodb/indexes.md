@@ -74,45 +74,40 @@ CREATE INDEX messages_todo
 ```
 
 ### Sparse Indexes
-The sparse property of an index ensures that the index only contain entries for documents that have the indexed field. The index skips documents that do not have the indexed field.
+- The `sparse` property of an index ensures that the `index only contain entries` for `documents` that `have the indexed field`.
+- The index `skips documents` that do `not have` the `indexed field`.
+- Can `combine` the `sparse` index option with the `unique` index option to `prevent` inserting `documents` that have `duplicate values` for the `indexed field`(s) and `skip indexing documents` that `lack` the `indexed field(s)`.
 
-You can combine the sparse index option with the unique index option to prevent inserting documents that have duplicate values for the indexed field(s) and skip indexing documents that lack the indexed field(s).
+### TTL Indexes
+- `special indexes` that `MongoDB` can use to `automatically remove documents` from a `collection` after `a certain amount of time`.
+- This is `ideal` for `certain types` of information like `machine generated event data`, `logs`, and `session information` that only need to `persist in a database` for `a finite amount of time`.
 
-TTL Indexes
-TTL indexes are special indexes that MongoDB can use to automatically remove documents from a collection after a certain amount of time. This is ideal for certain types of information like machine generated event data, logs, and session information that only need to persist in a database for a finite amount of time.
+### Hidden Indexes
+- `Not visible` to the `query planner` and `cannot be used` to `support a query`.
+- By `hiding an index` from the `planner`, users can `evaluate` the `potential impact` of `dropping an index without actually dropping the index`.
+- `If` the `impact` is `negative`, the `user` can `unhide` the `index` `instead of` having to `recreate a dropped index`.
+- And because `indexes` are `fully maintained while hidden`, the `indexes` are `immediately available` for use `once unhidden`.
+- `Except` for the `_id` index, you can `hide` any `indexes`.
+## Index Use
+- Indexes can `improve` the `efficiency` of `read` operations.
 
-See: Expire Data from Collections by Setting TTL for implementation instructions.
-
-Hidden Indexes
-New in version 4.4.
-
-Hidden indexes are not visible to the query planner and cannot be used to support a query.
-
-By hiding an index from the planner, users can evaluate the potential impact of dropping an index without actually dropping the index. If the impact is negative, the user can unhide the index instead of having to recreate a dropped index. And because indexes are fully maintained while hidden, the indexes are immediately available for use once unhidden.
-
-Except for the _id index, you can hide any indexes.
-
-Index Use
-Indexes can improve the efficiency of read operations. The Analyze Query Performance tutorial provides an example of the execution statistics of a query with and without an index.
-
-For information on how MongoDB chooses an index to use, see query optimizer.
-
-Indexes and Collation
-Collation allows users to specify language-specific rules for string comparison, such as rules for lettercase and accent marks.
-
-To use an index for string comparisons, an operation must also specify the same collation. That is, an index with a collation cannot support an operation that performs string comparisons on the indexed fields if the operation specifies a different collation.
-
-For example, the collection myColl has an index on a string field category with the collation locale "fr".
-
+## Indexes and Collation
+- `Collation` allows `users` to specify `language-specific rules` for `string comparison`, such as `rules` for `lettercase` and `accent marks`.
+- To `use` an `index` for `string comparisons`, an `operation` must also specify the `same collation`.
+- That is, an `index` with a `collation` `cannot support` an `operation` that performs `string comparisons` on the `indexed fields` if the `operation specifies a different collation`.
+- For example, the collection `myColl` has an `index` on a `string` field category with the collation locale `"fr"`.
+```
 db.myColl.createIndex( { category: 1 }, { collation: { locale: "fr" } } )
-
-The following query operation, which specifies the same collation as the index, can use the index:
-
+```
+- The following query operation, which specifies the `same collation` as the index, `can use the index`:
+```
 db.myColl.find( { category: "cafe" } ).collation( { locale: "fr" } )
+```
 
-However, the following query operation, which by default uses the "simple" binary collator, cannot use the index:
-
+- However, the following query operation, which `by default` uses the `"simple" binary collator`, `cannot use` the `index`:
+```
 db.myColl.find( { category: "cafe" } )
+```
 
 For a compound index where the index prefix keys are not strings, arrays, and embedded documents, an operation that specifies a different collation can still use the index to support comparisons on the index prefix keys.
 
